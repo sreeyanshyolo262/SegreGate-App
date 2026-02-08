@@ -62,3 +62,42 @@ function showError(message) {
     errorMessage.textContent = '❌ ' + message;
     errorMessage.classList.remove('hidden');
 }
+
+// Background Music Controls
+const bgMusic = document.getElementById('bgMusic');
+const muteBtn = document.getElementById('muteBtn');
+let isMuted = true; // Start muted (autoplay usually blocked)
+
+// Try to play music on first user interaction
+function startMusic() {
+    if (bgMusic.paused) {
+        bgMusic.volume = 0.3;
+        bgMusic.play().then(() => {
+            isMuted = false;
+            muteBtn.textContent = '🔊';
+            muteBtn.classList.remove('muted');
+        }).catch(() => {
+            // Autoplay blocked - that's fine, user can click mute button
+        });
+    }
+    document.removeEventListener('click', startMusic);
+}
+
+document.addEventListener('click', startMusic);
+
+// Mute button toggle
+muteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isMuted || bgMusic.paused) {
+        bgMusic.volume = 0.3;
+        bgMusic.play();
+        isMuted = false;
+        muteBtn.textContent = '🔊';
+        muteBtn.classList.remove('muted');
+    } else {
+        bgMusic.pause();
+        isMuted = true;
+        muteBtn.textContent = '🔇';
+        muteBtn.classList.add('muted');
+    }
+});
