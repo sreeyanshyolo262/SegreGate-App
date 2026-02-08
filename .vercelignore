@@ -1,6 +1,6 @@
-server.js
 node_modules
 .env
 .env.example
 .env.local
 public
+server.js
