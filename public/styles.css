@@ -201,6 +201,30 @@ main {
     margin-bottom: 8px;
 }
 
+.category.green {
+    border-left: 4px solid #28a745;
+}
+
+.category.green h4 {
+    color: #28a745;
+}
+
+.category.blue {
+    border-left: 4px solid #007bff;
+}
+
+.category.blue h4 {
+    color: #007bff;
+}
+
+.category.red {
+    border-left: 4px solid #dc3545;
+}
+
+.category.red h4 {
+    color: #dc3545;
+}
+
 .category p {
     font-size: 0.85em;
     color: #666;
