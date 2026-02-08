@@ -7,10 +7,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Popup Overlay -->
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <h1>🌿 Waste Classifier</h1>
+            <p class="popup-subtitle">Tell us what you're disposing of — we'll guide you to the right bin.</p>
+            
+            <div class="popup-divider"></div>
+            
+            <h2>Waste Segregation — Why It Matters</h2>
+            <p class="popup-text">
+                Waste that isn't segregated correctly at home cannot be fixed later. Even a small amount of food-soiled dry waste contaminates the entire load, forcing it to be sent to landfill.
+            </p>
+            <p class="popup-text">
+                These landfills are already overflowing, and one lies within 10 km of our homes. Large volumes of waste are routinely burnt — meaning we end up breathing the smoke.
+            </p>
+            <p class="popup-highlight">
+                Correct segregation at home is one of the few actions that truly prevents this.
+            </p>
+            
+            <button id="startBtn" class="start-btn">Start Classifying →</button>
+        </div>
+    </div>
+
     <div class="container">
         <header>
-            <h1>♻️ Waste Classifier</h1>
-            <p class="subtitle">Tell us what waste you want to dispose, and we'll tell you where it goes</p>
+            <h1>🌿 Waste Classifier</h1>
+            <p class="subtitle">Tell us what you're disposing of — we'll guide you to the right bin.</p>
         </header>
 
         <main>
@@ -59,16 +82,6 @@
             </div>
         </main>
     </div>
-
-    <!-- Background Music -->
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-    
-    <!-- Mute Button -->
-    <button id="muteBtn" class="mute-btn" title="Toggle Music">
-        🔊
-    </button>
 
     <script src="script.js"></script>
 </body>

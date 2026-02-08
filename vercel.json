@@ -14,10 +14,6 @@
       "use": "@vercel/static"
     },
     {
-      "src": "music.mp3",
-      "use": "@vercel/static"
-    },
-    {
       "src": "api/classify.js",
       "use": "@vercel/node"
     }
@@ -26,7 +22,6 @@
     { "src": "/api/classify", "dest": "/api/classify.js" },
     { "src": "/styles.css", "dest": "/styles.css" },
     { "src": "/script.js", "dest": "/script.js" },
-    { "src": "/music.mp3", "dest": "/music.mp3" },
     { "src": "/", "dest": "/index.html" }
   ]
 }

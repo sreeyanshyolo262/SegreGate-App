@@ -1,3 +1,8 @@
+// Popup Elements
+const popup = document.getElementById('popup');
+const startBtn = document.getElementById('startBtn');
+
+// Main App Elements
 const wasteInput = document.getElementById('wasteInput');
 const classifyBtn = document.getElementById('classifyBtn');
 const resultSection = document.getElementById('result');
@@ -5,6 +10,25 @@ const errorMessage = document.getElementById('error');
 const loading = document.getElementById('loading');
 const wasteItem = document.getElementById('wasteItem');
 const classificationBox = document.getElementById('classification');
+
+// Close popup and start the app
+startBtn.addEventListener('click', () => {
+    popup.style.animation = 'fadeOut 0.4s ease-out forwards';
+    setTimeout(() => {
+        popup.classList.add('hidden');
+        wasteInput.focus();
+    }, 400);
+});
+
+// Add fadeOut animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+`;
+document.head.appendChild(style);
 
 // Handle enter key press
 wasteInput.addEventListener('keypress', (e) => {
@@ -62,42 +86,3 @@ function showError(message) {
     errorMessage.textContent = '❌ ' + message;
     errorMessage.classList.remove('hidden');
 }
-
-// Background Music Controls
-const bgMusic = document.getElementById('bgMusic');
-const muteBtn = document.getElementById('muteBtn');
-let isMuted = true; // Start muted (autoplay usually blocked)
-
-// Try to play music on first user interaction
-function startMusic() {
-    if (bgMusic.paused) {
-        bgMusic.volume = 0.3;
-        bgMusic.play().then(() => {
-            isMuted = false;
-            muteBtn.textContent = '🔊';
-            muteBtn.classList.remove('muted');
-        }).catch(() => {
-            // Autoplay blocked - that's fine, user can click mute button
-        });
-    }
-    document.removeEventListener('click', startMusic);
-}
-
-document.addEventListener('click', startMusic);
-
-// Mute button toggle
-muteBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (isMuted || bgMusic.paused) {
-        bgMusic.volume = 0.3;
-        bgMusic.play();
-        isMuted = false;
-        muteBtn.textContent = '🔊';
-        muteBtn.classList.remove('muted');
-    } else {
-        bgMusic.pause();
-        isMuted = true;
-        muteBtn.textContent = '🔇';
-        muteBtn.classList.add('muted');
-    }
-});
