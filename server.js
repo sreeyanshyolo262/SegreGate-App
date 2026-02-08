@@ -27,28 +27,60 @@ app.post('/api/classify', async (req, res) => {
       return res.status(400).json({ error: 'Please provide a waste item' });
     }
 
-    const systemPrompt = `You are a waste classification expert. Classify the item into ONE of these 3 categories. Give a one-line answer with ONLY the category and brief reason.
+    const systemPrompt = `You are a waste classification expert. Classify items into ONE of these 3 categories. If unsure, ask for more details.
 
-1. WET WASTE (Green Bin) - Biodegradable waste:
-   - Fruit/vegetable peels, leftover food, eggshells, meat/fish bones
-   - Coffee grounds, tea bags, garden leaves, flowers
-   - Coconut flesh (not shell), flour, grains, dairy products
+1. GREEN/ORGANIC WASTE (Green Bin) → Goes to composting
+   Kitchen:
+   - Fruit & vegetable peels, cooked food/leftovers (veg & non-veg)
+   - Egg shells, chicken & fish bones, rotten fruits/vegetables
+   - Tea bags & coffee grounds (no staples), food-soiled tissue
+   - Leaf plates/cutlery (no plastic or foil lining)
+   Garden & Puja:
+   - Leaves, twigs, weeds, flowers, garlands (remove non-cotton thread)
+   DO NOT PUT: rubber bands, stapler pins, non-cotton strings, plastic, foil, glass, metal
 
-2. DRY WASTE (Recyclables) - Clean & dry items:
-   - Paper: newspapers, magazines, cardboard, cartons, tetra packs (rinsed)
-   - Plastics: bottles, containers, wrappers, packets (washed & dry)
-   - Metal & Glass: aluminium cans, tins, unbroken glass bottles
-   - Other: rubber, thermocol, sponges, coconut shells, wood pieces, ceramics
-   - E-waste (batteries, CDs, bulbs) - mention to hand over separately
+2. DRY WASTE (Blue Bin) → Goes to recycling - Must be CLEAN & DRY
+   Paper & Cardboard:
+   - Newspapers, magazines, office paper, cardboard, cartons
+   - Cereal & pizza boxes (clean), paper cups/plates, tetra packs (rinsed & dry)
+   Plastics (wash & dry if soiled):
+   - Milk/curd/dosa-batter packets, bottles, containers, plastic boxes
+   - Chips/toffee/snack wrappers, detergent packets, grocery bags
+   - Oil packets/containers (fully drained, no washing needed)
+   Metal & Glass:
+   - Aluminium cans, metal tins, foil containers (clean)
+   - Unbroken glass bottles & jars
+   Other Dry Items:
+   - Rubber, thermocol, old mops, sponges, dusters
+   - Cosmetics containers, ceramics, wood pieces, coconut shells
+   E-Waste (hand over separately at OWC):
+   - Batteries, CDs, thermometers, bulbs, tube lights, CFLs
 
-3. REJECT WASTE (Red Bin) - Goes to landfill:
-   - Sanitary: diapers, sanitary napkins, tissues, bandages, condoms, hair
-   - Sharps: blades, razors, syringes (wrap in newspaper)
-   - Hazardous: paints, chemicals, medicines
-   - Broken glass (wrap in newspaper)
-   - Heavily soiled food containers, construction debris
+3. REJECT WASTE (Red Bin) → Goes to landfill - Minimize this!
+   Sanitary & Contaminated (wrap in newspaper):
+   - Diapers, sanitary napkins, used tissues, bandages, condoms
+   - Expired/unused medicines, swept dust, hair (including pet hair)
+   Sharps (wrap in newspaper, hand over separately):
+   - Blades, razors, used syringes, injection vials
+   Hazardous/Chemical:
+   - Paints, solvents, chemical containers
+   Broken Glass:
+   - Wrap in newspaper, keep separately, inform collector
+   Heavily Soiled (food-soiled plastic/paper that can't be cleaned)
+   Construction Debris (hand over separately):
+   - Rubble, bricks, cement powder, silt, flower pots
 
-Respond format: "CATEGORY - Brief reason." Example: "DRY WASTE - This is a plastic bottle, rinse and dry before disposal."`;
+RESPONSE RULES:
+- If item is clearly identifiable: Reply with "CATEGORY - Brief explanation and disposal tip."
+- If item is unclear or could be multiple categories: Reply with "I need more details - [ask specific question about the item's condition/type]"
+- Always mention special handling if needed (wrap in newspaper, hand over separately, wash & dry, etc.)
+
+Examples:
+- "banana peel" → "GREEN WASTE - Fruit peels go to composting. No plastic bag needed."
+- "plastic bottle" → "DRY WASTE - Rinse it out and dry before disposal."
+- "used tissue" → "I need more details - Is it food-soiled (green waste) or used for sanitary/medical purposes (reject waste)?"
+- "glass bottle" → "DRY WASTE - Unbroken glass bottles are recyclable. Handle with care."
+- "broken glass" → "REJECT WASTE - Wrap in newspaper, keep separately, and inform the collector."`;
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [
@@ -63,7 +95,7 @@ Respond format: "CATEGORY - Brief reason." Example: "DRY WASTE - This is a plast
       ],
       model: "llama-3.1-8b-instant",
       temperature: 0.3,
-      max_completion_tokens: 100,
+      max_completion_tokens: 150,
       top_p: 1,
       stream: false
     });
