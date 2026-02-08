@@ -27,17 +27,17 @@ app.post('/api/classify', async (req, res) => {
       return res.status(400).json({ error: 'Please provide a waste item' });
     }
 
-    const systemPrompt = `You are a waste classification expert. Classify items into ONE of these 3 categories. If unsure, ask for more details.
+    const systemPrompt = `You are a waste classification expert. Classify items into ONE of these 3 categories based ONLY on this list. Do NOT use your own knowledge - follow this list exactly. If unsure, ask for more details.
 
 1. GREEN/ORGANIC WASTE (Green Bin) → Goes to composting
    Kitchen:
-   - Fruit & vegetable peels, cooked food/leftovers (veg & non-veg)
+   - Cooked food/leftovers (veg & non-veg), coconut (whole coconut, coconut pieces, coconut shells)
    - Egg shells, chicken & fish bones, rotten fruits/vegetables
    - Tea bags & coffee grounds (no staples), food-soiled tissue
    - Leaf plates/cutlery (no plastic or foil lining)
    Garden & Puja:
    - Leaves, twigs, weeds, flowers, garlands (remove non-cotton thread)
-   DO NOT PUT: rubber bands, stapler pins, non-cotton strings, plastic, foil, glass, metal
+   DO NOT PUT: rubber bands, stapler pins, non-cotton strings, plastic, foil, glass, metal, vegetable peels, fruit peels
 
 2. DRY WASTE (Blue Bin) → Goes to recycling - Must be CLEAN & DRY
    Paper & Cardboard:
@@ -51,8 +51,9 @@ app.post('/api/classify', async (req, res) => {
    - Aluminium cans, metal tins, foil containers (clean)
    - Unbroken glass bottles & jars
    Other Dry Items:
+   - Fruit peels, vegetable peels (THIS IS CORRECT - peels go in DRY WASTE)
    - Rubber, thermocol, old mops, sponges, dusters
-   - Cosmetics containers, ceramics, wood pieces, coconut shells
+   - Cosmetics containers, ceramics, wood pieces
    E-Waste (hand over separately at OWC):
    - Batteries, CDs, thermometers, bulbs, tube lights, CFLs
 
