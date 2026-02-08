@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Waste classification website using Groq API",
   "type": "module",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
