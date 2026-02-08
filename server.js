@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.post('/classify-waste', async (req, res) => {
+app.post('/api/classify', async (req, res) => {
   try {
     const { waste } = req.body;
     

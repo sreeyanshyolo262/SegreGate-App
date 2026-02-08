@@ -31,7 +31,7 @@ async function classifyWaste() {
     loading.classList.remove('hidden');
 
     try {
-        const response = await fetch('/classify-waste', {
+        const response = await fetch('/api/classify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
