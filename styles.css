@@ -372,3 +372,26 @@ main {
         font-size: 1.8em;
     }
 }
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid rgba(93, 78, 55, 0.2);
+    margin-top: 10px;
+}
+
+.site-footer p {
+    font-size: 0.85em;
+    color: #5d4e37;
+}
+
+.site-footer a {
+    color: #2d5016;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
