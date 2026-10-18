@@ -4,6 +4,7 @@ import { Groq } from 'groq-sdk';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import api from './lib/routes.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ const groq = new Groq({
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+app.use('/api', api);
 
 app.post('/api/classify', async (req, res) => {
   try {

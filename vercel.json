@@ -16,10 +16,15 @@
     {
       "src": "api/classify.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/ask.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     { "src": "/api/classify", "dest": "/api/classify.js" },
+    { "src": "/api/ask", "dest": "/api/ask.js" },
     { "src": "/styles.css", "dest": "/styles.css" },
     { "src": "/script.js", "dest": "/script.js" },
     { "src": "/", "dest": "/index.html" }

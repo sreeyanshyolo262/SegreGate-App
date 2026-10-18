@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SegreGate: a multi-society platform where residents, admins and collectors manage waste segregation together." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <title>SegreGate · MyGate for waste</title>
+  </head>
+  <body>
+    <canvas id="bg" aria-hidden="true"></canvas>
+
+    <div id="loader"><span>SegreGate</span></div>
+
+    <header class="nav">
+      <a href="#hero" class="brand"><i></i>SegreGate</a>
+      <nav>
+        <a href="#tour">Resident app</a>
+        <a href="#collector">Collectors</a>
+        <a href="#admin">Admin</a>
+        <a href="#game">Rewards</a>
+        <a href="#ai">AI</a>
+      </nav>
+      <a class="btn primary navcta" href="https://github.com/sreeyanshyolo262/SegreGate-App" target="_blank" rel="noopener">Try it now</a>
+    </header>
+
+    <div id="rail" aria-hidden="true"><div class="line"></div><div class="dot"></div></div>
+
+    <div id="hud" class="hud" data-status="clean" aria-live="polite">
+      <span class="pulse"></span>
+      <div><small>Collector bin check</small><strong id="hudLabel">Block A · bin 1</strong></div>
+      <b id="hudResult">Clean +40</b>
+    </div>
+
+    <main>
+      <!-- 1. HERO -->
+      <section id="hero" class="screen left">
+        <div class="col">
+          <p class="eyebrow reveal">MyGate for waste management</p>
+          <h1 class="split">Every society, sorted.</h1>
+          <p class="lead reveal">SegreGate gets residents, collectors and committees working on waste segregation together, then rewards the apartments, blocks and societies that do it best.</p>
+          <div class="row reveal">
+            <a class="btn primary" href="#problem">Start the journey</a>
+            <a class="btn ghost" href="https://github.com/sreeyanshyolo262/SegreGate-App" target="_blank" rel="noopener">Try it now</a>
+          </div>
+        </div>
+        <div class="cue"><span></span>Scroll</div>
+      </section>
+
+      <!-- 2. PROBLEM -->
+      <section id="problem" class="screen right">
+        <div class="col">
+          <p class="eyebrow reveal">The problem</p>
+          <h2 class="split">Everyone's told to segregate. Nobody checks.</h2>
+          <div class="stack">
+            <div class="glass reveal"><b>01</b><div><h3>Residents don't know what goes where</h3><p>Is a greasy pizza box dry or reject? Most people guess.</p></div></div>
+            <div class="glass reveal"><b>02</b><div><h3>Collectors can't give feedback</h3><p>They see the contamination first, but have no way to tell anyone.</p></div></div>
+            <div class="glass reveal"><b>03</b><div><h3>Committees have no data</h3><p>No numbers on which blocks struggle, so nothing improves.</p></div></div>
+          </div>
+          <p class="note reveal">SegreGate closes the loop, the way MyGate did for visitors and security.</p>
+        </div>
+      </section>
+
+      <!-- 3. RESIDENT APP TOUR (pinned) -->
+      <section id="tour" class="tour">
+        <div class="tour-inner">
+          <div class="tour-copy">
+            <p class="eyebrow">Resident app</p>
+            <h2>In every resident's pocket</h2>
+            <ol class="steps">
+              <li class="on" data-i="0"><b>Home</b><span>Your flat's score, streak, impact and next pickup at a glance.</span></li>
+              <li data-i="1"><b>Scan</b><span>Point the camera or type an item. Get the right bin and the reason why.</span></li>
+              <li data-i="2"><b>Ask</b><span>A chatbot that answers only from your society's own guidelines, and cites them.</span></li>
+              <li data-i="3"><b>Ranks</b><span>Flats, blocks and societies compete, scored per household so size is fair.</span></li>
+              <li data-i="4"><b>Me</b><span>Badges, rank, rewards, and the progress to your next perk.</span></li>
+            </ol>
+          </div>
+          <div class="phone-wrap">
+            <div class="phone" id="tourPhone">
+              <div class="notch"></div>
+              <img class="shot on" src="/shots/app-home.webp" alt="Home screen" />
+              <img class="shot" src="/shots/app-scan.webp" alt="Scan screen" />
+              <img class="shot" src="/shots/app-ask.webp" alt="Ask screen" />
+              <img class="shot" src="/shots/app-ranks.webp" alt="Leaderboard screen" />
+              <img class="shot" src="/shots/app-me.webp" alt="Profile screen" />
+            </div>
+            <div class="orb o1"></div><div class="orb o2"></div>
+          </div>
+          <div class="tour-side"><div class="glass mini"><small>Built with</small><strong>Tauri · React · TypeScript</strong><p>One codebase, runs on desktop and Android.</p></div></div>
+        </div>
+      </section>
+
+      <!-- 4. COLLECTOR -->
+      <section id="collector" class="screen right">
+        <div class="bigword" data-x="-30">COLLECT</div>
+        <div class="col">
+          <p class="eyebrow reveal">Collector app</p>
+          <h2 class="split">The bin check that makes it real.</h2>
+          <p class="lead reveal">Points come mainly from the collector's check at the bin, so nobody can fake a score by spamming the camera.</p>
+          <div class="check glass reveal" id="checkCard">
+            <small>Bin B-402 · wet</small>
+            <div class="rates">
+              <button data-r="clean" class="on"><i data-lucide="check"></i>Clean</button>
+              <button data-r="minor"><i data-lucide="minus"></i>Minor</button>
+              <button data-r="major"><i data-lucide="x"></i>Major</button>
+            </div>
+            <div class="photo"><i data-lucide="camera"></i>Add photo (optional)</div>
+            <p id="checkMsg">Clean pickup · +40 pts · streak continues</p>
+          </div>
+          <ul class="ticks reveal">
+            <li>See your pickup route and every bin on it</li>
+            <li>Scan the bin's QR code to open its record</li>
+            <li>Rate it clean, minor or major contamination</li>
+            <li>Log weights by waste category</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. ADMIN -->
+      <section id="admin" class="screen wide">
+        <div class="bigword" data-x="30">COMMITTEE</div>
+        <div class="head">
+          <p class="eyebrow reveal">Admin dashboard</p>
+          <h2 class="split">Mission control for the committee.</h2>
+          <p class="lead reveal">Update guidelines, post events and see what residents ask that you haven't answered yet. Changes reach every resident's phone within seconds.</p>
+        </div>
+        <div class="browsers">
+          <figure class="browser b1" data-speed="0.12"><div class="bar"><i></i><i></i><i></i></div><img src="/shots/admin-dashboard.webp" alt="Admin dashboard" loading="lazy" /></figure>
+          <figure class="browser b2" data-speed="-0.06"><div class="bar"><i></i><i></i><i></i></div><img src="/shots/admin-guidelines.webp" alt="Guidelines manager" loading="lazy" /></figure>
+          <figure class="browser b3" data-speed="0.2"><div class="bar"><i></i><i></i><i></i></div><img src="/shots/admin-compose.webp" alt="Compose an event" loading="lazy" /></figure>
+        </div>
+        <div class="cards3">
+          <div class="glass reveal"><h3>Guidelines &amp; FAQs</h3><p>Add, edit and delete the rules the assistant answers from.</p></div>
+          <div class="glass reveal"><h3>Announcements &amp; events</h3><p>Post notices, dated events and weekly challenges with a live phone preview.</p></div>
+          <div class="glass reveal"><h3>Unanswered questions</h3><p>See the gaps in your guidelines and fill them in one click.</p></div>
+          <div class="glass reveal"><h3>Contamination heatmap</h3><p>By block and floor, so you know where to focus.</p></div>
+          <div class="glass reveal"><h3>Trends &amp; forecasts</h3><p>Waste volume by category, plus weekly reports to download.</p></div>
+          <div class="glass reveal"><h3>People &amp; rewards</h3><p>Manage blocks, flats, residents, collectors and perks.</p></div>
+        </div>
+      </section>
+
+      <!-- 6. GAMIFICATION -->
+      <section id="game" class="screen left">
+        <div class="col">
+          <p class="eyebrow reveal">Rewards</p>
+          <h2 class="split">Make segregating a game worth winning.</h2>
+          <div class="grid2">
+            <div class="glass reveal"><span class="ico"><i data-lucide="star"></i></span><h3>Points</h3><p>For correct segregation, based on collector checks.</p></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="flame"></i></span><h3>Streaks</h3><p>Consecutive clean pickups keep the flame alive.</p></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="trophy"></i></span><h3>Leaderboards</h3><p>Flat, floor, block and society, scored per household.</p></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="trending-up"></i></span><h3>Most improved</h3><p>So lower-ranked flats always have a goal.</p></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="target"></i></span><h3>Challenges &amp; seasons</h3><p>Weekly goals, monthly resets, society vs society.</p></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="gift"></i></span><h3>Rewards</h3><p>Maintenance discounts, vouchers, a trophy for the best block.</p></div>
+          </div>
+          <div class="badges reveal">
+            <span><i data-lucide="trophy"></i>Zero Contamination Month</span><span><i data-lucide="sprout"></i>Compost Champion</span><span><i data-lucide="battery-charging"></i>E-waste Hero</span><span><i data-lucide="flame"></i>30-day Streak</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. AI -->
+      <section id="ai" class="screen right">
+        <div class="bigword" data-x="-30">SMARTER</div>
+        <div class="col">
+          <p class="eyebrow reveal">The data science</p>
+          <h2 class="split">Smart where it counts.</h2>
+          <div class="stack">
+            <div class="glass reveal"><span class="ico"><i data-lucide="message-circle"></i></span><div><h3>RAG chatbot</h3><p>Finds the right society guideline, then an LLM answers using only that text. If your rules don't cover it, it says so and tells the committee.</p></div></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="camera"></i></span><div><h3>Waste image classifier</h3><p>Fine-tuned on Indian waste categories, with a vision-LLM fallback when confidence is low.</p></div></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="repeat"></i></span><div><h3>Feedback loop</h3><p>Resident corrections from every society retrain one shared model.</p></div></div>
+            <div class="glass reveal"><span class="ico"><i data-lucide="chart-column"></i></span><div><h3>Forecasts, alerts &amp; clusters</h3><p>Predict waste volume, flag contamination spikes, and group commonly mis-sorted items.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. MULTI-SOCIETY -->
+      <section id="society" class="screen left">
+        <div class="col">
+          <p class="eyebrow reveal">Multi-society</p>
+          <h2 class="split">One platform. Many societies.</h2>
+          <p class="lead reveal">Every record belongs to a society, so each one only sees its own data. A city-wide leaderboard lets societies compete, while each keeps its own local rules, like different municipal collection days.</p>
+          <div class="glass board reveal">
+            <small>City leaderboard · example</small>
+            <div class="bar" data-w="100"><span>Palm Residency</span><i></i><b>41,200</b></div>
+            <div class="bar" data-w="97"><span>Lakeview Heights</span><i></i><b>39,880</b></div>
+            <div class="bar me" data-w="93"><span>Green Meadows</span><i></i><b>38,410</b></div>
+            <div class="bar" data-w="87"><span>Sunrise Enclave</span><i></i><b>36,050</b></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. IMPACT -->
+      <section id="impact" class="screen right">
+        <div class="col">
+          <p class="eyebrow reveal">Impact</p>
+          <h2 class="split">See what your society keeps out of landfill.</h2>
+          <div class="nums">
+            <div class="glass reveal"><strong><span data-count="86.4" data-dec="1">0</span><small> kg</small></strong><p>diverted from landfill</p></div>
+            <div class="glass reveal"><strong><span data-count="41.2" data-dec="1">0</span><small> kg</small></strong><p>CO₂ saved</p></div>
+            <div class="glass reveal"><strong><span data-count="12">0</span></strong><p>clean pickups in a row</p></div>
+          </div>
+          <p class="note reveal">Shown per household and per society, so every flat can see its own impact.</p>
+        </div>
+      </section>
+
+      <!-- 11. END -->
+      <section id="end" class="screen center dark">
+        <div class="col">
+          <p class="eyebrow reveal">Journey's end</p>
+          <h2 class="split">Welcome to Green Meadows.</h2>
+          <p class="lead reveal">Cleaner bins, clearer rules, and a neighbourhood that wants to win. That's SegreGate.</p>
+          <div class="row reveal" style="justify-content:center"><a class="btn primary" href="https://github.com/sreeyanshyolo262/SegreGate-App" target="_blank" rel="noopener">Try it now</a><a class="btn ghost" href="#hero">Ride again</a></div>
+          <div class="stackchips reveal"><span>Tauri</span><span>React</span><span>TypeScript</span><span>Tailwind</span><span>Node + Express</span><span>SQLite</span><span>Groq LLM</span><span>Three.js</span><span>GSAP</span></div>
+        </div>
+        <footer>SegreGate · a portfolio project</footer>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
