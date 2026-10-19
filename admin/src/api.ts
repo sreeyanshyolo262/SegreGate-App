@@ -29,11 +29,12 @@ export interface Announcement {
 export interface Stats {
   guidelines: number;
   announcements: number;
+  residents: number;
   questionsWeek: number;
   answeredWeek: number;
   gaps: number;
   days: { date: string; asked: number; answered: number }[];
-  gapList: { id: number; text: string; times: number; last: string }[];
+  gapList: { id: number; text: string; times: number; last: string; by: string | null }[];
 }
 
 let key = "";

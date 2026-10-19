@@ -38,14 +38,14 @@ function Login({ onDone }: { onDone: () => void }) {
             <li>💡 See what residents ask that you haven't answered yet</li>
           </ul>
         </div>
-        <p className="text-sm text-white/70">Green Meadows · Admin console</p>
+        <p className="text-sm text-white/70">Ajmera Infinity · Admin console</p>
         <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/10" />
         <div className="pointer-events-none absolute -bottom-32 right-20 h-72 w-72 rounded-full bg-white/10" />
       </div>
       <div className="grid place-items-center p-6">
         <form onSubmit={submit} className="w-full max-w-sm">
           <h1 className="text-3xl font-semibold">Welcome back</h1>
-          <p className="mb-8 mt-1 text-muted">Sign in to manage Green Meadows.</p>
+          <p className="mb-8 mt-1 text-muted">Sign in to manage Ajmera Infinity.</p>
           <label className="mb-1.5 block text-sm font-medium">Admin password</label>
           <div className="relative">
             <Lock size={16} className="absolute left-3.5 top-3.5 text-muted" />
@@ -79,8 +79,8 @@ export default function App() {
           ))}
         </nav>
         <div className="mt-auto rounded-xl bg-white/10 p-4 text-sm">
-          <p className="font-medium">Green Meadows</p>
-          <p className="text-xs text-white/60">Bengaluru · Admin</p>
+          <p className="font-medium">Ajmera Infinity</p>
+          <p className="text-xs text-white/60">Admin</p>
           <button onClick={() => { setKey(""); setAuthed(false); }} className="mt-3 flex items-center gap-2 text-xs text-white/80 hover:text-white"><LogOut size={14} />Sign out</button>
         </div>
       </aside>

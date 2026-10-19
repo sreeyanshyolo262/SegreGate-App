@@ -1,32 +1,4 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "styles.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "script.js", 
-      "use": "@vercel/static"
-    },
-    {
-      "src": "api/classify.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/ask.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    { "src": "/api/classify", "dest": "/api/classify.js" },
-    { "src": "/api/ask", "dest": "/api/ask.js" },
-    { "src": "/styles.css", "dest": "/styles.css" },
-    { "src": "/script.js", "dest": "/script.js" },
-    { "src": "/", "dest": "/index.html" }
-  ]
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }],
+  "functions": { "api/index.js": { "maxDuration": 30 } }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Megaphone, MessageCircleQuestion, AlertCircle, Plus, Check } from "lucide-react";
+import { BookOpen, Users, MessageCircleQuestion, AlertCircle, Plus, Check } from "lucide-react";
 import { api, type Stats, type Announcement } from "../api";
 import { Card, PageHeader, Button, fmtDate } from "../ui";
 import type { Page } from "../App";
@@ -34,11 +34,11 @@ export default function Dashboard({ go, addFromQuestion }: { go: (p: Page) => vo
 
   return (
     <div>
-      <PageHeader title="Dashboard" sub="What residents see and ask in Green Meadows." />
+      <PageHeader title="Dashboard" sub="What residents see and ask in Ajmera Infinity." />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat icon={BookOpen} label="Guidelines & FAQs" value={stats.guidelines} sub="Live in the resident app" tone="bg-brand-soft text-brand-dark" />
-        <Stat icon={Megaphone} label="Announcements" value={stats.announcements} sub="Notices, events & challenges" tone="bg-amber-100 text-amber-700" />
+        <Stat icon={Users} label="Residents joined" value={stats.residents} sub="Flats that have signed in" tone="bg-amber-100 text-amber-700" />
         <Stat icon={MessageCircleQuestion} label="Questions this week" value={stats.questionsWeek} sub={`${rate}% answered from guidelines`} tone="bg-sky-100 text-sky-700" />
         <Stat icon={AlertCircle} label="Needs an answer" value={stats.gaps} sub="Questions your guidelines missed" tone="bg-red-100 text-red-600" />
       </div>
@@ -80,7 +80,7 @@ export default function Dashboard({ go, addFromQuestion }: { go: (p: Page) => vo
                 <li key={g.id} className="flex items-center gap-2 rounded-xl border border-line p-3">
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{g.text}</p>
-                    <p className="text-xs text-muted">Asked {g.times}×</p>
+                    <p className="text-xs text-muted">Asked {g.times}×{g.by ? ` · latest from ${g.by}` : ""}</p>
                   </div>
                   <button title="Add a guideline" onClick={() => addFromQuestion(g.text)} className="grid h-8 w-8 place-items-center rounded-lg bg-accent"><Plus size={16} /></button>
                   <button title="Dismiss" onClick={() => api.resolveGap(g.text).then(load)} className="grid h-8 w-8 place-items-center rounded-lg border border-line text-muted hover:bg-surface"><Check size={16} /></button>

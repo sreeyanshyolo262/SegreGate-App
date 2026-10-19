@@ -115,7 +115,7 @@ A scroll-driven 3D journey built with Three.js, GSAP ScrollTrigger and Lenis. A 
 
 ```
  Resident app (Tauri + React)  ──┐
- Admin dashboard (React/Vite)  ──┼──►  Node + Express REST API  ──►  SQLite
+ Admin dashboard (React/Vite)  ──┼──►  Node + Express REST API  ──►  Supabase (Postgres)
  Collector app                 ──┘            │
                                               └──►  Groq LLM (RAG answers)
 ```
@@ -127,37 +127,45 @@ A scroll-driven 3D journey built with Three.js, GSAP ScrollTrigger and Lenis. A 
 ## Tech stack
 
 **Frontend:** React, TypeScript, Tailwind CSS v4, Vite, Tauri 2 (Rust), Three.js, GSAP, Lenis
-**Backend:** Node.js, Express, SQLite
+**Backend:** Node.js, Express (Vercel serverless), Supabase (Postgres)
 **AI / ML:** Groq API (LLM), retrieval-augmented generation, image classification, forecasting
 **Mobile:** Android via Tauri
 
 ## Repository layout
 
 ```
-resident-app/   Resident app (Tauri + React + TypeScript)
+resident-web/   Resident web app (React + Vite): block + flat login, announcements, Ask
+resident-app/   Full resident app (Tauri + React + TypeScript)
 admin/          Admin dashboard (React + Vite)
 landing/        3D landing page (Three.js + GSAP)
-lib/            API routes, database, RAG logic
-server.js       Express server
-api/            Serverless endpoints
+lib/            API routes, Supabase store, RAG logic
+api/            Vercel serverless entry for the API
+supabase/       Database schema (schema.sql)
+legacy/         Original single-page classifier
 docs/           Screenshots
 ```
 
 ## Getting started
 
-Requires Node 22+, and Rust for the Tauri app.
+Requires Node 20+, and Rust for the Tauri app.
 
 ```bash
-cp .env.example .env        # add your GROQ_API_KEY
+cp .env.example .env        # add GROQ_API_KEY (Supabase is optional locally)
 npm install
 npm start                   # API on http://localhost:3000
 ```
 
+Without Supabase credentials the API uses an in-memory store, so you can develop offline.
+
 ```bash
 cd admin && npm install && npm run dev          # http://localhost:5173  (password: admin123)
-cd resident-app && npm install && npm run dev   # http://localhost:1420
-cd resident-app && npx tauri android dev --host 127.0.0.1   # on a USB-connected Android phone
+cd resident-web && npm install && npm run dev   # http://localhost:1421
+cd resident-app && npx tauri android dev --host 127.0.0.1   # full app on a USB-connected Android phone
 cd landing && npm install && npm run dev        # http://localhost:5174
 ```
 
-Set `ADMIN_PASSWORD` in `.env` to change the admin password.
+## Deploying
+
+1. Create a Supabase project and run `supabase/schema.sql` in the SQL editor.
+2. Deploy the repo root as the API on Vercel with `GROQ_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` and `ADMIN_PASSWORD`.
+3. Deploy `resident-web`, `admin` and `landing` as separate Vercel projects (set each Root Directory). Set `VITE_API_URL` on the first two to the API URL.
