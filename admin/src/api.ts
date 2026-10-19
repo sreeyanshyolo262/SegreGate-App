@@ -37,6 +37,8 @@ export interface Stats {
   gapList: { id: number; text: string; times: number; last: string; by: string | null }[];
 }
 
+export interface Resident { block: string; flat: string; firstSeen: string; lastSeen: string }
+
 let key = "";
 try { key = sessionStorage.getItem("sg-admin-key") ?? ""; } catch { /* storage unavailable */ }
 
@@ -66,6 +68,7 @@ async function call<T>(path: string, method = "GET", body?: unknown): Promise<T>
 export const api = {
   login: (password: string) => call<{ ok: boolean }>("/admin/login", "POST", { password }),
   stats: () => call<Stats>("/admin/stats"),
+  residents: () => call<Resident[]>("/admin/residents"),
   resolveGap: (text: string) => call("/admin/questions/resolve", "POST", { text }),
   guidelines: () => call<Guideline[]>("/guidelines"),
   saveGuideline: (g: Partial<Guideline>) => (g.id ? call<Guideline>(`/guidelines/${g.id}`, "PUT", g) : call<Guideline>("/guidelines", "POST", g)),

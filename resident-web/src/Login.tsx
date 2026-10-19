@@ -23,7 +23,7 @@ export default function Login({ onDone }: { onDone: (s: Session) => void }) {
     }
   }
 
-  const letters = BLOCKS.filter((b) => b !== "Willows");
+  const letters = BLOCKS.filter((b) => b !== "Villows");
 
   return (
     <form onSubmit={submit} className="rise px-5 pb-10 pt-8">
@@ -44,8 +44,8 @@ export default function Login({ onDone }: { onDone: (s: Session) => void }) {
           <button type="button" key={b} onClick={() => { setBlock(b); setErr(""); }}
             className={`press rounded-2xl border-2 border-ink py-3 font-display text-lg font-extrabold shadow-[0_3px_0_#12332a] transition ${block === b ? "bg-ink text-butter" : "bg-white"}`}>{b}</button>
         ))}
-        <button type="button" onClick={() => { setBlock("Willows"); setErr(""); }}
-          className={`press col-span-5 rounded-2xl border-2 border-ink py-3 font-display text-lg font-extrabold shadow-[0_3px_0_#12332a] transition ${block === "Willows" ? "bg-ink text-butter" : "bg-mint"}`}>Willows</button>
+        <button type="button" onClick={() => { setBlock("Villows"); setErr(""); }}
+          className={`press col-span-5 rounded-2xl border-2 border-ink py-3 font-display text-lg font-extrabold shadow-[0_3px_0_#12332a] transition ${block === "Villows" ? "bg-ink text-butter" : "bg-mint"}`}>Villows</button>
       </div>
 
       <p className="mb-2 mt-7 font-display text-lg font-bold">Your flat number</p>

@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { LayoutDashboard, BookOpen, Megaphone, LogOut, Leaf, Lock } from "lucide-react";
+import { LayoutDashboard, BookOpen, Megaphone, Users, LogOut, Leaf, Lock } from "lucide-react";
 import { api, hasKey, setKey } from "./api";
 import { Button, inputCls } from "./ui";
 import Dashboard from "./pages/Dashboard";
 import Guidelines from "./pages/Guidelines";
 import Announcements from "./pages/Announcements";
+import Residents from "./pages/Residents";
 
 const NAV = [
   { id: "dash", label: "Dashboard", icon: LayoutDashboard },
   { id: "guide", label: "Guidelines & FAQs", icon: BookOpen },
   { id: "news", label: "Announcements & Events", icon: Megaphone },
+  { id: "people", label: "Residents", icon: Users },
 ] as const;
 export type Page = (typeof NAV)[number]["id"];
 
@@ -95,6 +97,7 @@ export default function App() {
           {page === "dash" && <Dashboard go={setPage} addFromQuestion={(q) => { setPrefill(q); setPage("guide"); }} />}
           {page === "guide" && <Guidelines prefill={prefill} clearPrefill={() => setPrefill(null)} />}
           {page === "news" && <Announcements />}
+          {page === "people" && <Residents />}
         </main>
       </div>
     </div>

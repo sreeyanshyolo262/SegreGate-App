@@ -38,7 +38,7 @@ export default function Dashboard({ go, addFromQuestion }: { go: (p: Page) => vo
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat icon={BookOpen} label="Guidelines & FAQs" value={stats.guidelines} sub="Live in the resident app" tone="bg-brand-soft text-brand-dark" />
-        <Stat icon={Users} label="Residents joined" value={stats.residents} sub="Flats that have signed in" tone="bg-amber-100 text-amber-700" />
+        <Stat icon={Users} label="Flats signed in" value={stats.residents} sub="Flats that have signed in" tone="bg-amber-100 text-amber-700" />
         <Stat icon={MessageCircleQuestion} label="Questions this week" value={stats.questionsWeek} sub={`${rate}% answered from guidelines`} tone="bg-sky-100 text-sky-700" />
         <Stat icon={AlertCircle} label="Needs an answer" value={stats.gaps} sub="Questions your guidelines missed" tone="bg-red-100 text-red-600" />
       </div>

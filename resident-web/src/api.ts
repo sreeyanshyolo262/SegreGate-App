@@ -1,7 +1,7 @@
 export const API = (import.meta.env.VITE_API_URL as string | undefined) ?? "";
 
 // Blocks at Ajmera Infinity.
-export const BLOCKS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "Willows"] as const;
+export const BLOCKS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "Villows"] as const;
 export type Block = (typeof BLOCKS)[number];
 
 export interface Announcement {

@@ -81,7 +81,7 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
           <p className="text-sm font-medium opacity-60">Ajmera Infinity</p>
           <h1 className="font-display text-[28px] font-extrabold leading-tight">Welcome home</h1>
           <p className="mt-1 inline-block rounded-full bg-ink px-3 py-1 text-xs font-bold text-butter">
-            {session.block === "Willows" ? "Willows" : `Block ${session.block}`} · Flat {session.flat}
+            {session.block === "Villows" ? "Villows" : `Block ${session.block}`} · Flat {session.flat}
           </p>
         </div>
         <button onClick={onSignOut} aria-label="Sign out" title="Sign out" className="card press grid h-11 w-11 place-items-center bg-white"><LogOut size={19} /></button>
