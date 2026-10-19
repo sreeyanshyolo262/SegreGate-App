@@ -105,6 +105,19 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
         <button onClick={onSignOut} aria-label="Sign out" title="Sign out" className="grid h-10 w-10 place-items-center rounded-full border-2 border-ink/15 text-ink/70 active:scale-95"><LogOut size={17} /></button>
       </header>
 
+      <section className="mt-7">
+        <Card tone="mint" onClick={() => setGuideOpen(true)} className="flex items-center gap-4 p-3.5">
+          <div className="h-[72px] w-14 shrink-0 overflow-hidden rounded-lg border-2 border-ink bg-white">
+            <img src={GUIDE_SRC} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="font-display text-lg font-extrabold leading-tight">Segregation guide</p>
+            <p className="text-[13px] opacity-70">See what goes in each bin</p>
+          </div>
+          <ChevronRight size={20} className="shrink-0" />
+        </Card>
+      </section>
+
       <section className="mt-8">
         <h2 className="mb-3 font-display text-lg font-extrabold">Notices &amp; events</h2>
         <div className="space-y-3">
@@ -118,19 +131,6 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
         </div>
         {hidden > 0 && <button onClick={() => setShowAll(true)} className="mt-3 text-sm font-bold underline decoration-2 underline-offset-4">Show {hidden} more</button>}
         {showAll && items && items.length > SHOW && <button onClick={() => setShowAll(false)} className="mt-3 text-sm font-bold underline decoration-2 underline-offset-4">Show less</button>}
-      </section>
-
-      <section className="mt-8">
-        <Card tone="mint" onClick={() => setGuideOpen(true)} className="flex items-center gap-4 p-3.5">
-          <div className="h-[72px] w-14 shrink-0 overflow-hidden rounded-lg border-2 border-ink bg-white">
-            <img src={GUIDE_SRC} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="font-display text-lg font-extrabold leading-tight">Segregation guide</p>
-            <p className="text-[13px] opacity-70">See what goes in each bin</p>
-          </div>
-          <ChevronRight size={20} className="shrink-0" />
-        </Card>
       </section>
 
       <section className="mt-9">
