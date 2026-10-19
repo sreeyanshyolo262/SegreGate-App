@@ -1,6 +1,6 @@
 export const API = (import.meta.env.VITE_API_URL as string) || "http://localhost:3000";
 
-export const CATEGORIES = ["Wet waste", "Dry waste", "Reject waste", "E-waste", "Pickup", "General"] as const;
+export const CATEGORIES = ["Wet waste", "Dry waste", "Reject waste", "Hazardous waste", "E-waste", "Pickup", "General"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
 export interface Guideline {

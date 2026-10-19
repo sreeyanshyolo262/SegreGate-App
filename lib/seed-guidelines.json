@@ -1,180 +1,317 @@
 [
   {
-    "id": "wet-1",
+    "id": "ai-gen-overview",
+    "category": "General",
+    "question": "Is waste segregation mandatory at Ajmera Infinity?",
+    "answer": "Yes. Segregation at source is mandatory under the Solid Waste Management (SWM) Rules, 2016, and this is not a new requirement. Ajmera Infinity is a notified Bulk Waste Generator (BWG) and is legally accountable for compliance. Inspections or audits can happen at any time, and non-compliance can attract significant penalties. BWGs must ensure segregation at source, scientific processing of wet waste, and responsible disposal of dry and reject waste.",
+    "keywords": ["mandatory", "compulsory", "law", "legal", "rules", "swm", "bulk waste generator", "bwg", "inspection", "audit"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-gen-streams",
+    "category": "General",
+    "question": "What are the waste categories I need to separate?",
+    "answer": "The updated 2026 SWM guidelines require four-stream segregation: Wet, Dry, Sanitary and Special Care waste. At Ajmera Infinity this means: wet (organic) waste in the green bin, dry waste in a reusable bag or bin, sanitary/reject waste in the red bin, and hazardous/special care waste handed over separately.",
+    "keywords": ["streams", "categories", "types", "four", "bins", "how many", "separate", "segregate"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-gen-dates",
+    "category": "General",
+    "question": "When do the new segregation rules start and when are they enforced?",
+    "answer": "Adoption started on 1 March 2026. Enforcement started on 1 April 2026, and penalties apply from 1 April 2026.",
+    "keywords": ["date", "dates", "deadline", "start", "begin", "enforcement", "march", "april", "2026"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-gen-directive",
+    "category": "General",
+    "question": "Where can I read the official 2026 SWM directive?",
+    "answer": "The official directive is at https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jan/doc2026129773501.pdf",
+    "keywords": ["official", "directive", "pdf", "link", "government", "pib", "document"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-gen-support",
+    "category": "General",
+    "question": "Who can help me with segregation, and is there a guide?",
+    "answer": "Sustainability Volunteers are available during the transition to answer questions. Your block Sustainability Volunteer is the first person to ask. A step-by-step segregation guide is at https://drive.google.com/file/d/1sqP_iwxmj56imUouwabbwcbpEUQz0V5H/view?usp=drive_link",
+    "keywords": ["help", "support", "volunteer", "sustainability", "guide", "contact", "question", "steps"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-gen-why",
+    "category": "General",
+    "question": "Why does segregation matter?",
+    "answer": "Much of our waste ends up in landfills, where it is often burned openly and releases harmful smoke, or in illegal dump yards where chemicals and leachate poison the soil and eventually the groundwater. This contributes to respiratory problems, exposure to carcinogens from burning plastics and rubber, and contaminated water. Proper segregation protects sanitation workers, maximizes recycling and composting, and prevents landfill overflow. It is about protecting our health, our communities and our homes.",
+    "keywords": ["why", "reason", "important", "matters", "landfill", "health", "environment", "pollution"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-gen-donate",
+    "category": "General",
+    "question": "What should I do with items I want to donate?",
+    "answer": "Do not leave donation items out with your waste, because they can be mistaken for dry waste. Hand them over directly or give them at donation drives.",
+    "keywords": ["donate", "donation", "give away", "old clothes", "reuse", "charity", "drive"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-wet-1",
     "category": "Wet waste",
-    "question": "What goes in the green (wet) bin?",
-    "answer": "Fruit and vegetable peels, cooked food and leftovers (veg and non-veg), egg shells, chicken and fish bones, rotten produce, tea bags and coffee grounds (no staples), food-soiled tissue, and garden or puja waste like leaves, flowers and garlands.",
-    "keywords": [
-      "green",
-      "wet",
-      "compost",
-      "organic",
-      "kitchen"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "What counts as wet (organic) waste?",
+    "answer": "Kitchen waste: vegetable and fruit peels, cooked food and leftovers, egg shells, chicken and fish bones, rotten fruits and vegetables, tea bags and coffee grinds, and leaf plates. Garden waste: fallen leaves and twigs, puja flowers and garlands, and weeds.",
+    "keywords": ["wet", "organic", "kitchen", "food", "peel", "peels", "fruit", "vegetable", "egg", "bones", "tea bag", "coffee", "leaf plate", "leaves", "flowers", "garland", "puja", "garden", "weeds", "leftovers", "compost", "green"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "wet-2",
+    "id": "ai-wet-bin",
     "category": "Wet waste",
-    "question": "What should never go in the wet bin?",
-    "answer": "Plastic, foil, glass, metal, rubber bands, stapler pins and non-cotton strings. Remove the thread from garlands before putting them in.",
-    "keywords": [
-      "not",
-      "contaminate",
-      "avoid"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "How do I keep and hand over wet waste?",
+    "answer": "Use the green bin, or any bin with a prominent green mark (a tick). Keep it covered. Do NOT use liners: hand the waste over loose. Hand it over daily and wash the bin regularly. A small piece of paper at the bottom to absorb moisture is fine, but don't line the whole bin with newspaper.",
+    "keywords": ["wet", "green bin", "green mark", "liner", "liners", "loose", "daily", "wash", "cover", "covered", "newspaper", "bin"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "dry-1",
+    "id": "ai-wet-not",
+    "category": "Wet waste",
+    "question": "What does NOT belong in wet waste?",
+    "answer": "Anything that isn't food or natural organic matter does not belong in wet waste. Biodegradable or compostable cutlery is not wet waste: if it is clean and dry, treat it as dry waste; if it is soiled, treat it as reject waste.",
+    "keywords": ["not wet", "compostable", "cutlery", "biodegradable", "spoon", "fork", "plate", "avoid", "contaminate"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-dry-1",
     "category": "Dry waste",
-    "question": "What goes in the blue (dry) bin?",
-    "answer": "Clean and dry paper, cardboard, cartons, plastic bottles, containers and wrappers, milk packets, metal cans and tins, unbroken glass bottles and jars, rubber, thermocol, old mops and sponges, ceramics, wood and coconut shells.",
-    "keywords": [
-      "blue",
-      "dry",
-      "recycle",
-      "recycling",
-      "plastic",
-      "paper"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "What counts as dry waste?",
+    "answer": "Plastic (rinse if soiled): plastic covers, bottles, boxes and items, chips and coffee wrappers, milk and curd packets, broken toys. Paper (wipe if soiled): newspaper and magazines, stationery and junk mail, cardboard cartons, pizza boxes and Tetra-packs, paper cups and plates. Metal: foil containers and wraps, metal cans. Other dry waste: unbroken glass items, rubber and thermocol, old mops, dusters and sponges, cosmetics, ceramics and wooden chips, flower pots and planters, coconut shells, fabric waste and broken footwear. Unbroken glass, flower pots and fabric/footwear have special handling.",
+    "keywords": ["dry", "plastic", "paper", "cardboard", "carton", "metal", "can", "foil", "glass", "bottle", "wrapper", "packet", "milk packet", "tetra", "thermocol", "rubber", "sponge", "mop", "duster", "cosmetics", "ceramic", "coconut shell", "toys", "newspaper", "magazine", "cup", "plate", "recycle"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "dry-2",
+    "id": "ai-dry-container",
     "category": "Dry waste",
-    "question": "Do I need to wash dry waste before throwing it?",
-    "answer": "Yes. Rinse and dry anything that is food-soiled, like milk packets and containers. Oil packets only need to be fully drained. Items that cannot be cleaned go in the red bin.",
-    "keywords": [
-      "wash",
-      "clean",
-      "rinse",
-      "soiled",
-      "greasy",
-      "pizza"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "What do I put dry waste in?",
+    "answer": "Use any reusable bag or bin only. No disposable liners for dry waste.",
+    "keywords": ["dry", "bag", "container", "bin", "liner", "liners", "reusable", "disposable", "carry"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "rej-1",
+    "id": "ai-dry-clean",
+    "category": "Dry waste",
+    "question": "Do I need to clean dry waste before handing it over?",
+    "answer": "Rinse plastic if it is soiled, and wipe paper if it is soiled.",
+    "keywords": ["clean", "wash", "rinse", "wipe", "soiled", "dirty", "greasy", "oily", "plastic", "paper"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-dry-pizza",
+    "category": "Dry waste",
+    "question": "Where do pizza boxes and Tetra-packs go?",
+    "answer": "Pizza boxes and Tetra-packs are dry waste (paper). Wipe them if they are soiled.",
+    "keywords": ["pizza", "box", "tetra", "tetrapak", "carton", "cardboard", "juice", "milk carton"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-dry-fragile",
+    "category": "Dry waste",
+    "question": "How do I dispose unbroken glass bottles and flower pots?",
+    "answer": "It is best to give them away for reuse to crafters, helpers or donation drives. If you must discard them, keep them separate and place them unwrapped in a sturdy box with fillers, so collectors can see the contents and handle them safely.",
+    "keywords": ["glass", "bottle", "bottles", "jar", "flower pot", "pots", "planter", "planters", "fragile", "unbroken", "box", "fillers"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-dry-fabric",
+    "category": "Dry waste",
+    "question": "How do I dispose fabric waste, old clothes and broken footwear?",
+    "answer": "Wash fabric before disposal, to protect workers at Textile Recovery Facilities and to allow repurposing. Periodic collection drives for fabric and broken footwear are being considered. If the clothes or footwear are still usable, hand them over directly or give them at donation drives instead.",
+    "keywords": ["fabric", "cloth", "clothes", "clothing", "textile", "t-shirt", "shirt", "jeans", "footwear", "shoes", "slippers", "chappal", "sandals", "rags", "bedsheet", "curtain"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-rej-1",
     "category": "Reject waste",
-    "question": "What goes in the red (reject) bin?",
-    "answer": "Diapers, sanitary napkins, used tissues, bandages, condoms, expired medicines, swept dust, hair, and heavily soiled plastic or paper that cannot be cleaned. Wrap sanitary items in newspaper.",
-    "keywords": [
-      "red",
-      "reject",
-      "landfill",
-      "sanitary",
-      "diaper",
-      "medicine"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "What counts as sanitary or reject waste?",
+    "answer": "Diapers and sanitary napkins, bandages, nails, used tissues, pet poop, human hair and pet hair, swept house dust, soiled biodegradable or compostable cutlery, and compostable or \"oxo-biodegradable\" liners (they can't be told apart from plastic bags, so they count as reject).",
+    "keywords": ["reject", "sanitary", "diaper", "diapers", "napkin", "napkins", "pad", "pads", "bandage", "nails", "tissue", "tissues", "pet", "poop", "hair", "dust", "sweepings", "red"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "rej-2",
+    "id": "ai-rej-bin",
     "category": "Reject waste",
-    "question": "How do I dispose sharps like blades, razors and syringes?",
-    "answer": "Wrap them in newspaper and hand them to the collector separately. Do not put them loose in any bin.",
-    "keywords": [
-      "blade",
-      "razor",
-      "syringe",
-      "needle",
-      "sharp"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "How do I keep and hand over reject waste?",
+    "answer": "Use the red bin, or any bin with a clear red cross mark. Do NOT use plastic liners. Wrap items adequately in paper and place them directly in the bin. Liners are not required.",
+    "keywords": ["reject", "red bin", "red cross", "wrap", "paper", "liner", "liners", "bin", "sanitary"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "rej-3",
+    "id": "ai-rej-pet",
     "category": "Reject waste",
-    "question": "What do I do with broken glass?",
-    "answer": "Wrap it in newspaper, keep it separate from the bins and tell the collector. Unbroken glass bottles and jars go in the dry bin.",
-    "keywords": [
-      "glass",
-      "broken"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "How do I dispose pet waste?",
+    "answer": "Preferably use the designated community pet waste bins. Otherwise, place it in a securely tied bag (preferably red) in the reject (red) bin.",
+    "keywords": ["pet", "dog", "cat", "poop", "waste", "stool", "droppings", "animal"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "rej-4",
+    "id": "ai-rej-medical",
     "category": "Reject waste",
-    "question": "How do I dispose paint, solvents and chemicals?",
-    "answer": "These are hazardous waste. Keep them in their container and hand them over separately. Never mix them with other waste.",
-    "keywords": [
-      "paint",
-      "chemical",
-      "solvent",
-      "hazardous"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "How do I handle household medical waste?",
+    "answer": "If a liner is needed for hygiene, use the smallest available bag and tie it securely. This exception does not apply to sanitary waste like diapers or napkins. Medicines, syringes and injection vials are biomedical hazardous waste and are handed over separately.",
+    "keywords": ["medical", "household", "hygiene", "liner", "bag", "medicine", "syringe", "dressing", "cotton"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "ew-1",
-    "category": "E-waste",
-    "question": "How do I dispose batteries, bulbs and electronics?",
-    "answer": "Batteries, CDs, thermometers, bulbs, tube lights and CFLs are e-waste. Do not put them in the bins. Hand them over separately to the collector or the e-waste drop point.",
-    "keywords": [
-      "battery",
-      "batteries",
-      "bulb",
-      "cfl",
-      "tubelight",
-      "electronic",
-      "charger",
-      "cable",
-      "phone"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "id": "ai-haz-1",
+    "category": "Hazardous waste",
+    "question": "What is hazardous or special care waste, and how do I hand it over?",
+    "answer": "Hazardous waste is handed over separately and must not be mixed with other streams. Physical hazardous: broken glass, razors, blades, bulbs and tube lights. Biomedical hazardous: used syringes, injection vials, medicines. Chemical hazardous: batteries (lithium-ion), paints, rubble, cement powder. Designated collection points will be set up across the campus, and details will be shared soon.",
+    "keywords": ["hazardous", "special care", "separately", "collection point", "dangerous", "toxic", "chemical", "biomedical", "physical"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "gen-1",
+    "id": "ai-haz-battery",
+    "category": "Hazardous waste",
+    "question": "How do I dispose batteries, bulbs and tube lights?",
+    "answer": "Batteries (lithium-ion), bulbs and tube lights are hazardous waste. Hand them over separately and do not mix them with other waste. Designated collection points will be set up across the campus, and details will be shared soon.",
+    "keywords": ["battery", "batteries", "lithium", "bulb", "bulbs", "tube light", "tubelight", "cfl", "led", "e-waste", "electronic", "charger"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-haz-sharps",
+    "category": "Hazardous waste",
+    "question": "What do I do with broken glass, razors and blades?",
+    "answer": "Broken glass, razors and blades are physical hazardous waste. Hand them over separately and do not mix them with other waste. Designated collection points will be set up across the campus, and details will be shared soon.",
+    "keywords": ["broken glass", "glass", "razor", "razors", "blade", "blades", "sharp", "sharps", "cut", "needle"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-haz-medicine",
+    "category": "Hazardous waste",
+    "question": "How do I dispose medicines, syringes and injection vials?",
+    "answer": "Medicines, used syringes and injection vials are biomedical hazardous waste. Hand them over separately and do not mix them with other waste. Designated collection points will be set up across the campus, and details will be shared soon.",
+    "keywords": ["medicine", "medicines", "tablet", "tablets", "syringe", "syringes", "injection", "vial", "vials", "expired", "biomedical", "drugs"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-haz-chemical",
+    "category": "Hazardous waste",
+    "question": "How do I dispose paint, rubble and cement powder?",
+    "answer": "Paints, rubble and cement powder are chemical hazardous waste. Hand them over separately and do not mix them with other waste. Designated collection points will be set up across the campus, and details will be shared soon.",
+    "keywords": ["paint", "paints", "rubble", "cement", "construction", "debris", "chemical", "solvent", "renovation"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-liner-1",
     "category": "General",
-    "question": "Can I use plastic bags to line the wet bin?",
-    "answer": "No. Plastic contaminates compost. Use newspaper or put the waste in directly.",
-    "keywords": [
-      "bag",
-      "liner",
-      "line",
-      "polythene",
-      "plastic"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "Can I use plastic bags or liners for my waste?",
+    "answer": "Wet waste: no liners at all. Plastic liners can't be composted, can't be recycled once soiled, and end up in landfill. Even \"compostable\" bags usually need industrial composting and don't break down reliably in decentralized setups. Dry waste: use only reusable bags or bins. Reject waste: liners are not required; wrap the waste securely in paper and place it in the bin.",
+    "keywords": ["liner", "liners", "plastic bag", "bag", "bags", "polythene", "garbage bag", "dustbin bag", "compostable bag", "cover"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "gen-2",
+    "id": "ai-liner-ok",
     "category": "General",
-    "question": "Where do tea bags and coffee grounds go?",
-    "answer": "Wet bin, as long as the tea bag has no staple and is not plastic mesh.",
-    "keywords": [
-      "tea",
-      "coffee",
-      "teabag"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "When are liners acceptable?",
+    "answer": "Liners are acceptable in hygiene cases such as household medical waste (use the smallest bag and tie it securely), and for large-volume community waste handling.",
+    "keywords": ["liner", "liners", "acceptable", "allowed", "exception", "hygiene", "medical", "community"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   },
   {
-    "id": "gen-3",
+    "id": "ai-liner-old",
     "category": "General",
-    "question": "Where do pizza boxes go?",
-    "answer": "A clean box goes in the dry bin. If it is greasy or food-soiled, tear off the clean part for dry and put the soiled part in the red bin.",
-    "keywords": [
-      "pizza",
-      "box",
-      "cardboard",
-      "greasy"
-    ],
-    "source": "Society waste guidelines",
-    "updatedAt": "2026-10-01"
+    "question": "What can I do with liners I have already bought?",
+    "answer": "You can use them for pet waste, laundry storage, or packing shoes for travel. You can also donate them to small nearby clinics. The Association will share more options soon.",
+    "keywords": ["liner", "liners", "already bought", "leftover", "stock", "unused", "garbage bags", "use up", "donate"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-bin-label",
+    "category": "General",
+    "question": "How should I label my bins and bags?",
+    "answer": "Label all bins and bags clearly with your flat number. This is required for monitoring and accountability. You may use any bins for wet and reject waste. The wet bin needs a visible green mark (a tick) and the reject bin needs a clear red cross.",
+    "keywords": ["label", "labelling", "mark", "flat number", "name", "tag", "green mark", "red cross", "bin", "bins", "monitoring"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-bin-size",
+    "category": "General",
+    "question": "What size should my bins be?",
+    "answer": "Bins must be a reasonable size. A bin that is too small may be mistaken for waste during collection.",
+    "keywords": ["size", "small", "big", "large", "bin", "bins", "dustbin", "container"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-pick-time",
+    "category": "Pickup",
+    "question": "When is waste collected?",
+    "answer": "Collection is door-to-door, between 4 AM and 7 AM.",
+    "keywords": ["time", "timing", "timings", "when", "collection", "pickup", "pick up", "schedule", "morning", "door to door", "collector"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-pick-where",
+    "category": "Pickup",
+    "question": "Where should I keep my waste for collection?",
+    "answer": "Keep it just outside your door. Never leave it in the fire escape stairwell, and never where it obstructs anyone's passage.",
+    "keywords": ["where", "keep", "place", "outside", "door", "stairwell", "fire escape", "staircase", "passage", "corridor", "lobby", "landing"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-pick-missed",
+    "category": "Pickup",
+    "question": "What if my waste was missed or not collected?",
+    "answer": "Take the bin back in and put it out again the next day. If it keeps happening, tell your block Sustainability Volunteer, who will inform the collector.",
+    "keywords": ["missed", "not collected", "skipped", "left", "didn't take", "complaint", "collector", "volunteer", "uncollected"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-pen-1",
+    "category": "General",
+    "question": "What happens if I don't segregate my waste?",
+    "answer": "For initial non-compliance, the waste will not be collected: segregate correctly and put it out the next day. Enforcement is meant to be corrective, not punitive, but consistent non-segregation cannot be accommodated in a Bulk Waste Generator system. Penalties apply from 1 April 2026, in line with applicable rules and community decisions. Unsegregated waste WILL attract a penalty.",
+    "keywords": ["penalty", "penalties", "fine", "punishment", "not collected", "refused", "non-compliance", "unsegregated", "consequence", "mixed waste"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
+  },
+  {
+    "id": "ai-party-1",
+    "category": "General",
+    "question": "How should I manage waste when hosting a party or gathering?",
+    "answer": "Set up separate wet and dry bins for guests. Prefer reusable cutlery and crockery. If you use disposables, choose leaf-based or fully compostable ones so the waste stays in the wet stream. For non-organic disposables like paper plates or glasses: collect soiled paper plates and food-contaminated items separately and hand them over as instructed. Clean, used water glasses can go in dry waste, while glasses used for juice or other drinks go with the soiled items.",
+    "keywords": ["party", "gathering", "guests", "event", "celebration", "birthday", "disposable", "disposables", "paper plates", "glasses", "cups", "cutlery", "crockery", "function"],
+    "source": "Ajmera Infinity Waste Segregation Guidelines",
+    "updatedAt": "2026-10-19"
   }
 ]
