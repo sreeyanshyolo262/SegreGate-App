@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { LayoutDashboard, BookOpen, Megaphone, Users, LogOut, Leaf, Lock } from "lucide-react";
+import { LayoutDashboard, BookOpen, CircleHelp, Megaphone, Users, LogOut, Leaf, Lock } from "lucide-react";
 import { api, hasKey, setKey } from "./api";
 import { Button, inputCls } from "./ui";
 import Dashboard from "./pages/Dashboard";
 import Guidelines from "./pages/Guidelines";
+import Faqs from "./pages/Faqs";
 import Announcements from "./pages/Announcements";
 import Residents from "./pages/Residents";
 
 const NAV = [
   { id: "dash", label: "Dashboard", icon: LayoutDashboard },
-  { id: "guide", label: "Guidelines & FAQs", icon: BookOpen },
+  { id: "guide", label: "Guidelines", icon: BookOpen },
+  { id: "faqs", label: "FAQs", icon: CircleHelp },
   { id: "news", label: "Announcements & Events", icon: Megaphone },
   { id: "people", label: "Residents", icon: Users },
 ] as const;
@@ -96,6 +98,7 @@ export default function App() {
         <main className="mx-auto max-w-6xl p-6 lg:p-10">
           {page === "dash" && <Dashboard go={setPage} addFromQuestion={(q) => { setPrefill(q); setPage("guide"); }} />}
           {page === "guide" && <Guidelines prefill={prefill} clearPrefill={() => setPrefill(null)} />}
+          {page === "faqs" && <Faqs />}
           {page === "news" && <Announcements />}
           {page === "people" && <Residents />}
         </main>

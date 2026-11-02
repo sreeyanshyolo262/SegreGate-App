@@ -24,6 +24,21 @@ export interface Answer {
   related: { id: string; question: string }[];
 }
 
+export interface Faq {
+  id: string;
+  topic: string;
+  question: string;
+  answer: string;
+  position: number;
+  updatedAt: string;
+}
+
+export interface TroubleCheck { question: string; why: string; fix: string; source: string | null }
+interface TroubleBase { counts: { faqs: number; guidelines: number }; consulted: { title: string; type: "FAQ" | "Guideline" }[] }
+export type TroubleResult =
+  | (TroubleBase & { kind: "missed"; checks: TroubleCheck[]; category: string })
+  | (TroubleBase & { kind: "answer"; answer: string | null; grounded: boolean });
+
 export interface Session { block: Block; flat: string }
 
 async function call<T>(path: string, body?: unknown): Promise<T> {
@@ -45,6 +60,8 @@ async function call<T>(path: string, body?: unknown): Promise<T> {
 export const api = {
   login: (s: Session) => call<{ ok: boolean }>("/residents/login", s),
   announcements: () => call<Announcement[]>("/announcements"),
+  faqs: () => call<Faq[]>("/faqs"),
+  troubleshoot: (problem: string, s: Session) => call<TroubleResult>("/troubleshoot", { problem, ...s }),
   ask: (question: string, s: Session) => call<Answer>("/ask", { question, ...s }),
 };
 

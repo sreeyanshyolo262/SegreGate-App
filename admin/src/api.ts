@@ -37,6 +37,10 @@ export interface Stats {
   gapList: { id: number; text: string; times: number; last: string; by: string | null }[];
 }
 
+export const FAQ_TOPICS = ["Rules", "Bins & liners", "Special cases", "Collection", "Help", "Why it matters"] as const;
+export type FaqTopic = (typeof FAQ_TOPICS)[number];
+export interface Faq { id: string; topic: FaqTopic; question: string; answer: string; position: number; updatedAt: string }
+
 export interface Resident { block: string; flat: string; firstSeen: string; lastSeen: string }
 
 let key = "";
@@ -73,6 +77,9 @@ export const api = {
   guidelines: () => call<Guideline[]>("/guidelines"),
   saveGuideline: (g: Partial<Guideline>) => (g.id ? call<Guideline>(`/guidelines/${g.id}`, "PUT", g) : call<Guideline>("/guidelines", "POST", g)),
   deleteGuideline: (id: string) => call(`/guidelines/${id}`, "DELETE"),
+  faqs: () => call<Faq[]>("/faqs"),
+  saveFaq: (f: Partial<Faq>) => (f.id ? call<Faq>(`/faqs/${f.id}`, "PUT", f) : call<Faq>("/faqs", "POST", f)),
+  deleteFaq: (id: string) => call(`/faqs/${id}`, "DELETE"),
   announcements: () => call<Announcement[]>("/announcements"),
   saveAnnouncement: (a: Partial<Announcement>) => (a.id ? call<Announcement>(`/announcements/${a.id}`, "PUT", a) : call<Announcement>("/announcements", "POST", a)),
   deleteAnnouncement: (id: number) => call(`/announcements/${id}`, "DELETE"),

@@ -53,7 +53,7 @@ export default function Guidelines({ prefill, clearPrefill }: { prefill: string 
 
   return (
     <div>
-      <PageHeader title="Guidelines & FAQs" sub="The assistant in the resident app answers only from what is written here."
+      <PageHeader title="Guidelines" sub="The assistant in the resident app answers only from what is written here."
         action={<Button onClick={() => { setErr(""); setDraft(blank); }}><Plus size={16} />New guideline</Button>} />
 
       <Card>

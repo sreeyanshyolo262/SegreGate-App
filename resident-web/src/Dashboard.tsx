@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LogOut, Megaphone, Send, Sprout, BookOpen, ChevronRight } from "lucide-react";
-import { api, type Announcement, type Answer, type Session } from "./api";
+import { LogOut, Megaphone, Send, Sprout, BookOpen, CircleHelp, ChevronRight, TriangleAlert } from "lucide-react";
+import { api, type Announcement, type Answer, type Faq, type Session } from "./api";
 import { Card } from "./ui";
 import GuideViewer, { GUIDE_SRC } from "./GuideViewer";
+import FaqSheet from "./FaqSheet";
+import ReportSheet from "./ReportSheet";
+import { InstallHelp, InstallStrip } from "./Install";
+import Linkified from "./Linkified";
+import InstagramSection, { InstagramButton } from "./Instagram";
 
 const TONE = { notice: "sky", event: "peach", challenge: "butter" } as const;
 const LABEL = { notice: "Notice", event: "Event", challenge: "Challenge" } as const;
@@ -18,18 +23,6 @@ function EventDate({ iso }: { iso: string }) {
         <p className="text-[10px] font-bold uppercase">{d.toLocaleString("en", { month: "short" })}</p>
       </div>
     </div>
-  );
-}
-
-// Make links in notices tappable and let long URLs wrap inside the card.
-function Linkified({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/(https?:\/\/\S+)/g).map((part, i) =>
-        /^https?:\/\//.test(part)
-          ? <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="font-bold underline underline-offset-2 [overflow-wrap:anywhere]">{part}</a>
-          : <span key={i}>{part}</span>)}
-    </>
   );
 }
 
@@ -49,27 +42,46 @@ function NoticeCard({ n }: { n: Announcement }) {
 
 interface Msg { from: "me" | "bot"; text: string; fromGuide?: boolean; related?: { id: string; question: string }[] }
 
+type Sheet = "faq" | "guide" | "report" | "install" | null;
+
 export default function Dashboard({ session, onSignOut }: { session: Session; onSignOut: () => void }) {
   const [items, setItems] = useState<Announcement[] | null>(null);
   const [loadErr, setLoadErr] = useState(false);
   const [showAll, setShowAll] = useState(false);
-  const [guideOpen, setGuideOpen] = useState(false);
+  const [sheet, setSheet] = useState<Sheet>(() => history.state?.sheet ?? null);
+  const [faqs, setFaqs] = useState<Faq[] | null>(null);
+  const [faqErr, setFaqErr] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const end = useRef<HTMLDivElement>(null);
   const started = useRef(false);
+  const buddy = useRef<HTMLElement>(null);
+  const input = useRef<HTMLInputElement>(null);
 
   const load = useCallback(() => {
     api.announcements().then((a) => { setItems(a); setLoadErr(false); }).catch(() => setLoadErr(true));
   }, []);
+  const loadFaqs = useCallback(() => {
+    api.faqs().then((f) => { setFaqs(f); setFaqErr(false); }).catch(() => setFaqErr(true));
+  }, []);
   useEffect(() => {
-    load();
-    const t = setInterval(load, 30000);
-    const vis = () => document.visibilityState === "visible" && load();
+    const refresh = () => { load(); loadFaqs(); };
+    refresh();
+    const t = setInterval(refresh, 30000);
+    const vis = () => document.visibilityState === "visible" && refresh();
     document.addEventListener("visibilitychange", vis);
     return () => { clearInterval(t); document.removeEventListener("visibilitychange", vis); };
-  }, [load]);
+  }, [load, loadFaqs]);
+
+  // Full-screen views live in browser history, so the phone's back gesture closes them instead of leaving the app.
+  useEffect(() => {
+    const onPop = () => setSheet(history.state?.sheet ?? null);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  const openSheet = (s: Exclude<Sheet, null>) => { history.pushState({ sheet: s }, ""); setSheet(s); };
+  const closeSheet = useCallback(() => { if (history.state?.sheet) history.back(); else setSheet(null); }, []);
 
   useEffect(() => { if (started.current) end.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, [msgs, busy]);
 
@@ -90,6 +102,16 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
     setBusy(false);
   }
 
+  function askFromFaq(q?: string) {
+    closeSheet();
+    setTimeout(() => {
+      buddy.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (q) send(q); else input.current?.focus();
+    }, 120);
+  }
+
+  // Hide the FAQs tile if they have never loaded, so a failure doesn't leave a dead button.
+  const showFaqTile = faqs ? faqs.length > 0 : !faqErr;
   const visible = items ? (showAll ? items : items.slice(0, SHOW)) : [];
   const hidden = items ? items.length - visible.length : 0;
   const where = session.block === "Villows" ? "Villows" : `Block ${session.block}`;
@@ -102,21 +124,40 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
           <h1 className="font-display text-[28px] font-extrabold leading-tight">Welcome home</h1>
           <p className="mt-0.5 text-sm font-medium opacity-65">{where} · Flat {session.flat}</p>
         </div>
-        <button onClick={onSignOut} aria-label="Sign out" title="Sign out" className="grid h-10 w-10 place-items-center rounded-full border-2 border-ink/15 text-ink/70 active:scale-95"><LogOut size={17} /></button>
+        <div className="flex shrink-0 items-center gap-2">
+          <InstagramButton />
+          <button onClick={onSignOut} aria-label="Sign out" title="Sign out" className="grid h-10 w-10 place-items-center rounded-full border-2 border-ink/15 text-ink/70 active:scale-95"><LogOut size={17} /></button>
+        </div>
       </header>
 
-      <section className="mt-7">
-        <Card tone="mint" onClick={() => setGuideOpen(true)} className="flex items-center gap-4 p-3.5">
-          <div className="h-[72px] w-14 shrink-0 overflow-hidden rounded-lg border-2 border-ink bg-white">
+      <section className={`rise mt-7 grid gap-3 ${showFaqTile ? "grid-cols-2" : "grid-cols-1"}`}>
+        <button onClick={() => openSheet("guide")} className="card press relative flex flex-col items-start justify-start overflow-hidden bg-mint p-3.5 text-left">
+          <span className="absolute -right-5 -top-5 h-16 w-16 rounded-full bg-leaf/15" />
+          <span className="relative block h-14 w-11 overflow-hidden rounded-lg border-2 border-ink bg-white">
             <img src={GUIDE_SRC} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="font-display text-lg font-extrabold leading-tight">Segregation guide</p>
-            <p className="text-[13px] opacity-70">See what goes in each bin</p>
-          </div>
-          <ChevronRight size={20} className="shrink-0" />
-        </Card>
+          </span>
+          <span className="relative mt-3 block font-display text-[17px] font-extrabold leading-tight">Segregation guide</span>
+          <span className="relative mt-0.5 block text-[13px] leading-snug opacity-70">What goes in each bin</span>
+        </button>
+        {showFaqTile && (
+          <button onClick={() => { loadFaqs(); openSheet("faq"); }} className="card press relative flex flex-col items-start justify-start overflow-hidden bg-butter p-3.5 text-left">
+            <span className="float-a absolute -right-5 -top-5 h-16 w-16 rounded-full bg-peach" />
+            <span className="relative grid h-14 w-11 place-items-center rounded-lg border-2 border-ink bg-white"><CircleHelp size={24} /></span>
+            <span className="relative mt-3 block font-display text-[17px] font-extrabold leading-tight">FAQs</span>
+            <span className="relative mt-0.5 block text-[13px] leading-snug opacity-70">{faqs ? `${faqs.length} quick answers` : "Quick answers"}</span>
+          </button>
+        )}
       </section>
+
+      <button onClick={() => { loadFaqs(); openSheet("report"); }} className="card press rise mt-3 flex w-full items-center gap-3 bg-blush p-3 text-left">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border-2 border-ink bg-white"><TriangleAlert size={21} /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-display text-[17px] font-extrabold leading-tight">Report a problem</span>
+          <span className="block text-[13px] leading-snug opacity-70">Waste not collected? Let's sort it</span>
+        </span>
+        <ChevronRight size={20} className="shrink-0" />
+      </button>
+      <InstallStrip onNeedHelp={() => openSheet("install")} />
 
       <section className="mt-8">
         <h2 className="mb-3 font-display text-lg font-extrabold">Notices &amp; events</h2>
@@ -133,7 +174,7 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
         {showAll && items && items.length > SHOW && <button onClick={() => setShowAll(false)} className="mt-3 text-sm font-bold underline decoration-2 underline-offset-4">Show less</button>}
       </section>
 
-      <section className="mt-9">
+      <section ref={buddy} className="mt-9 scroll-mt-4">
         <div className="mb-3 flex items-center gap-3">
           <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border-2 border-ink bg-butter"><Sprout size={21} /></div>
           <div>
@@ -177,14 +218,19 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
             <div ref={end} />
           </div>
           <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-center gap-2 border-t-2 border-ink px-3 py-2.5">
-            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Type an item…" maxLength={300}
-              className="min-w-0 flex-1 bg-transparent px-1 py-1.5 text-[15px] outline-none placeholder:opacity-40" />
+            <input ref={input} value={text} onChange={(e) => setText(e.target.value)} placeholder="Type an item…" maxLength={300}
+              className="min-w-0 flex-1 bg-transparent px-1 py-1.5 text-base outline-none placeholder:opacity-40" />
             <button disabled={busy || !text.trim()} aria-label="Send" className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-leaf text-white active:scale-95 disabled:opacity-40"><Send size={17} /></button>
           </form>
         </div>
       </section>
 
-      {guideOpen && <GuideViewer onClose={() => setGuideOpen(false)} />}
+      <InstagramSection />
+
+      {sheet === "guide" && <GuideViewer onClose={closeSheet} />}
+      {sheet === "report" && <ReportSheet session={session} faqCount={faqs?.length ?? null} onClose={closeSheet} />}
+      {sheet === "install" && <InstallHelp onClose={closeSheet} />}
+      {sheet === "faq" && <FaqSheet faqs={faqs} failed={faqErr} onRetry={loadFaqs} onClose={closeSheet} onAsk={askFromFaq} />}
     </div>
   );
 }
