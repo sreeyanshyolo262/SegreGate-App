@@ -11,9 +11,9 @@ export const tones = {
 } as const;
 export type Tone = keyof typeof tones;
 
-export function Card({ tone = "white", className = "", children, onClick }: { tone?: Tone; className?: string; children: ReactNode; onClick?: () => void }) {
+export function Card({ tone = "white", soft = false, className = "", children, onClick }: { tone?: Tone; soft?: boolean; className?: string; children: ReactNode; onClick?: () => void }) {
   return (
-    <div onClick={onClick} className={`card ${tones[tone]} ${onClick ? "press cursor-pointer" : ""} ${className}`}>
+    <div onClick={onClick} className={`${soft ? "card-soft" : "card"} ${tones[tone]} ${onClick ? "press cursor-pointer" : ""} ${className}`}>
       {children}
     </div>
   );

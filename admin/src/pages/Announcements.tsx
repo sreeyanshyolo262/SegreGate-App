@@ -19,7 +19,7 @@ function PhonePreview({ d }: { d: Draft }) {
   return (
     <div className="mx-auto w-64 rounded-[2.2rem] border-[6px] border-ink bg-[#fffbea] p-3 shadow-lg">
       <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-ink/80" />
-      <p className="mb-2 text-sm font-bold">Society notices &amp; events</p>
+      <p className="mb-2 text-sm font-bold">Community updates</p>
       <div className="flex gap-2.5 rounded-2xl border-2 border-ink p-3 shadow-[0_3px_0_#16261f]" style={{ background: t.phone }}>
         {d.type === "event" && date ? (
           <div className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border-2 border-ink bg-white text-center leading-none">
@@ -27,7 +27,7 @@ function PhonePreview({ d }: { d: Draft }) {
           </div>
         ) : <t.icon size={18} className="mt-0.5 shrink-0" />}
         <div className="min-w-0">
-          <p className="text-[9px] font-bold uppercase tracking-wider opacity-60">{d.pinned ? "📌 " : ""}{t.label}</p>
+          <p className="text-[9px] font-bold uppercase tracking-wider opacity-60">{d.pinned ? "Pinned · " : ""}{d.type === "notice" ? "Update" : t.label}</p>
           <p className="text-xs font-bold">{d.title || "Your title appears here"}</p>
           {d.body && <p className="text-[11px] opacity-70">{d.body}</p>}
           {d.type === "event" && (d.eventTime || d.location) && <p className="mt-1 text-[11px] font-medium">{[d.eventTime, d.location].filter(Boolean).join(" · ")}</p>}

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ChevronDown, CircleHelp, Leaf, LifeBuoy, PackageOpen, Scale, Search, Sprout, Trash2, Truck, X, type LucideIcon } from "lucide-react";
+import { ArrowLeft, BookOpen, ChevronDown, CircleHelp, Leaf, LifeBuoy, PackageOpen, Search, Sprout, Trash2, Truck, X, type LucideIcon } from "lucide-react";
 import type { Faq } from "./api";
 import Linkified from "./Linkified";
 
-const TOPICS: { id: string; tone: string; icon: LucideIcon }[] = [
-  { id: "Rules", tone: "bg-sky", icon: Scale },
+const TOPICS: { id: string; label?: string; tone: string; icon: LucideIcon }[] = [
+  { id: "Rules", label: "The basics", tone: "bg-sky", icon: BookOpen },
   { id: "Bins & liners", tone: "bg-mint", icon: Trash2 },
   { id: "Special cases", tone: "bg-peach", icon: PackageOpen },
   { id: "Collection", tone: "bg-butter", icon: Truck },
@@ -13,6 +13,7 @@ const TOPICS: { id: string; tone: string; icon: LucideIcon }[] = [
 ];
 const FALLBACK = { tone: "bg-white", icon: CircleHelp };
 const styleOf = (topic: string) => TOPICS.find((t) => t.id === topic) ?? FALLBACK;
+const labelOf = (topic: string) => TOPICS.find((t) => t.id === topic)?.label ?? topic;
 
 const termsOf = (q: string) => q.toLowerCase().split(/\s+/).filter(Boolean);
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -135,7 +136,7 @@ export default function FaqSheet({ faqs, failed, onRetry, onClose, onAsk }: Prop
           <span className="float-c absolute -bottom-10 left-1/3 h-24 w-24 rounded-full bg-leaf/70" />
           <div className="relative">
             <h1 className="font-display text-[34px] font-extrabold leading-none">Got a question?</h1>
-            <p className="mt-2 text-sm opacity-85">{faqs ? `${faqs.length} answers from your committee` : "Answers from your committee"}</p>
+            <p className="mt-2 text-sm opacity-85">{faqs ? `${faqs.length} quick answers, all in one place` : "Quick answers, all in one place"}</p>
             <label className="mt-4 flex items-center gap-2.5 rounded-2xl border-2 border-ink bg-white px-3.5 text-ink shadow-[0_4px_0_#0a2a20]">
               <Search size={18} className="shrink-0 opacity-50" />
               <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search FAQs, like liners" aria-label="Search FAQs"
@@ -150,7 +151,7 @@ export default function FaqSheet({ faqs, failed, onRetry, onClose, onAsk }: Prop
           <div className="scroll-hide flex min-w-0 flex-1 gap-2 overflow-x-auto py-1 pr-4">
             {[{ id: "All", tone: "bg-white" }, ...present].map((t) => (
               <button key={t.id} onClick={(e) => pickTopic(t.id, e.currentTarget)} aria-pressed={topic === t.id}
-                className={`h-9 shrink-0 whitespace-nowrap rounded-full border-2 border-ink px-3.5 text-sm font-bold transition-transform active:scale-95 ${topic === t.id ? "bg-ink text-butter" : t.tone}`}>{t.id}</button>
+                className={`h-9 shrink-0 whitespace-nowrap rounded-full border-2 border-ink px-3.5 text-sm font-bold transition-transform active:scale-95 ${topic === t.id ? "bg-ink text-butter" : t.tone}`}>{labelOf(t.id)}</button>
             ))}
           </div>
         </div>
@@ -164,7 +165,7 @@ export default function FaqSheet({ faqs, failed, onRetry, onClose, onAsk }: Prop
 
           {groups.map((g) => (
             <section key={g.id}>
-              {topic === "All" && <h2 className="mb-2.5 ml-1 font-display text-lg font-extrabold">{g.id}</h2>}
+              {topic === "All" && <h2 className="mb-2.5 ml-1 font-display text-lg font-extrabold">{labelOf(g.id)}</h2>}
               <div className="space-y-3">
                 {g.items.map((f) => (
                   <FaqItem key={f.id} faq={f} terms={terms} open={openId === f.id} delay={Math.min(index++, 8) * 40}

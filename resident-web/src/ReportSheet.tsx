@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, BookOpen, Check, CheckCheck, ClipboardCopy, ExternalLink, FileText, PartyPopper, RotateCcw, Search, Send, Sparkles, Sprout, Trash2, TriangleAlert, Wrench, X, type LucideIcon } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, CheckCheck, ClipboardCopy, ExternalLink, FileText, MapPin, RotateCcw, Search, Send, Sparkles, Trash2, Wrench, X, type LucideIcon } from "lucide-react";
 import { api, type Session, type TroubleCheck, type TroubleResult } from "./api";
 import Linkified from "./Linkified";
+import AnswerCard from "./AnswerCard";
+import { Mascot } from "./Buddy";
 
 const PLAY = "https://play.google.com/store/apps/details?id=com.mygate.user";
 const APP_STORE = "https://apps.apple.com/in/app/mygate-premium/id1101762651";
@@ -14,11 +16,11 @@ function mygateLinks() {
   return { open: "https://mygate.com", store: null };
 }
 
-const PROBLEMS: { text: string; icon: LucideIcon; tone: string }[] = [
-  { text: "My waste wasn't collected", icon: Trash2, tone: "bg-blush" },
-  { text: "My bin keeps getting skipped", icon: RotateCcw, tone: "bg-peach" },
-  { text: "Someone left waste in the stairwell", icon: TriangleAlert, tone: "bg-butter" },
-  { text: "I don't know which bin something goes in", icon: Search, tone: "bg-sky" },
+const PROBLEMS: { text: string; icon: LucideIcon; tone: string; buddy?: boolean }[] = [
+  { text: "My waste wasn't collected", icon: Trash2, tone: "bg-peach" },
+  { text: "My bin keeps getting missed", icon: RotateCcw, tone: "bg-butter" },
+  { text: "Waste left in the stairwell", icon: MapPin, tone: "bg-mint" },
+  { text: "Which bin does something go in?", icon: Search, tone: "bg-sky", buddy: true },
 ];
 const TONES = ["bg-sky", "bg-mint", "bg-peach", "bg-butter", "bg-blush"];
 
@@ -56,7 +58,7 @@ function Thinking({ result, faqCount, onDone }: { result: TroubleResult | null; 
         <span className="float-a absolute -right-6 -top-6 h-24 w-24 rounded-full bg-butter/25" />
         <span className="float-c absolute -bottom-8 left-1/2 h-16 w-16 rounded-full bg-leaf/70" />
         <div className="relative flex items-center gap-3">
-          <span className="think-bob grid h-12 w-12 shrink-0 place-items-center rounded-2xl border-2 border-white bg-butter text-ink"><Sprout size={23} /></span>
+          <span className="shrink-0"><Mascot size={46} thinking /></span>
           <div>
             <p className="font-display text-xl font-extrabold leading-tight">Bin-Buddy is on it</p>
             <p className="text-[13px] opacity-80" aria-live="polite">{ready ? "Found what applies to you" : "Going through your society's rules"}</p>
@@ -109,7 +111,7 @@ function Checks({ checks, onAllGood, onFix }: { checks: TroubleCheck[]; onAllGoo
   return (
     <div>
       <p className="font-display text-xl font-extrabold leading-tight">A few quick checks</p>
-      <p className="mt-1 text-sm opacity-65">Collectors can skip a bin if one of these was missed.</p>
+      <p className="mt-1 text-sm leading-snug opacity-70">These are the usual reasons a bin gets missed. Let's see if one of them applies.</p>
 
       <div className="mt-4 flex gap-1.5" role="progressbar" aria-valuemin={0} aria-valuemax={checks.length} aria-valuenow={index + 1} aria-label={`Check ${index + 1} of ${checks.length}`}>
         {checks.map((_, i) => <span key={i} className={`h-2.5 flex-1 rounded-full border-2 border-ink transition-colors duration-300 ${i < index ? "bg-leaf" : i === index ? "bg-butter" : "bg-white"}`} />)}
@@ -132,13 +134,13 @@ function Checks({ checks, onAllGood, onFix }: { checks: TroubleCheck[]; onAllGoo
         {!saidNo ? (
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button onClick={next} className="press card flex h-14 items-center justify-center gap-2 bg-leaf font-display text-lg font-extrabold text-white"><Check size={20} strokeWidth={3} /> Yes</button>
-            <button onClick={() => setSaidNo(true)} className="press card flex h-14 items-center justify-center gap-2 bg-white font-display text-lg font-extrabold"><X size={20} strokeWidth={3} /> No</button>
+            <button onClick={() => setSaidNo(true)} className="press card flex h-14 items-center justify-center gap-2 bg-white font-display text-lg font-extrabold"><X size={20} strokeWidth={3} /> Not quite</button>
           </div>
         ) : (
           <div className="rise mt-4 rounded-2xl bg-white p-3.5">
-            <p className="flex items-center gap-2 font-display text-base font-extrabold"><Wrench size={17} /> This could be why</p>
+            <p className="flex items-center gap-2 font-display text-base font-extrabold"><Wrench size={17} /> This might be why</p>
             <p className="mt-1 text-[15px] leading-snug">{check.fix}</p>
-            <button onClick={() => onFix(check)} className="press card mt-3 h-12 w-full bg-butter font-display text-base font-extrabold">Okay, I'll fix this</button>
+            <button onClick={() => onFix(check)} className="press card mt-3 h-12 w-full bg-butter font-display text-base font-extrabold">Thanks, I'll do that</button>
             <button onClick={next} className="mt-2 h-10 w-full text-sm font-bold underline underline-offset-4">Actually, I did this</button>
           </div>
         )}
@@ -172,9 +174,9 @@ function Ticket({ category, session, onDone }: { category: string; session: Sess
       <div className="card rise relative overflow-hidden bg-mint p-5">
         <span className="float-a absolute -right-5 -top-5 h-20 w-20 rounded-full bg-butter" />
         <span className="float-b absolute bottom-3 right-14 h-6 w-6 rounded-full bg-peach" />
-        <span className="pop-in relative grid h-12 w-12 place-items-center rounded-2xl border-2 border-ink bg-white"><PartyPopper size={23} /></span>
-        <p className="relative mt-3 font-display text-2xl font-extrabold leading-tight">You did everything right</p>
-        <p className="relative mt-1 text-[15px] leading-snug opacity-80">So this shouldn't have been skipped. Raise a ticket on MyGate and the society team will pick it up.</p>
+        <span className="pop-in relative grid h-12 w-12 place-items-center rounded-2xl border-2 border-ink bg-white"><CheckCheck size={23} /></span>
+        <p className="relative mt-3 font-display text-2xl font-extrabold leading-tight">You've done your part</p>
+        <p className="relative mt-1 text-[15px] leading-snug opacity-80">Thanks for checking. This one shouldn't have been missed, so please raise a ticket on MyGate and the society team will pick it up.</p>
       </div>
 
       <h2 className="mb-3 mt-6 font-display text-lg font-extrabold">How to raise it</h2>
@@ -206,7 +208,7 @@ function Ticket({ category, session, onDone }: { category: string; session: Sess
   );
 }
 
-export default function ReportSheet({ session, faqCount, onClose }: { session: Session; faqCount: number | null; onClose: () => void }) {
+export default function ReportSheet({ session, faqCount, onClose, onAsk }: { session: Session; faqCount: number | null; onClose: () => void; onAsk: (question?: string) => void }) {
   type Phase = "ask" | "thinking" | "checks" | "fix" | "ticket" | "answer";
   const [phase, setPhase] = useState<Phase>("ask");
   const [text, setText] = useState("");
@@ -237,11 +239,11 @@ export default function ReportSheet({ session, faqCount, onClose }: { session: S
   const finishThinking = () => setPhase((p) => (p !== "thinking" ? p : result?.kind === "missed" ? "checks" : "answer"));
 
   return (
-    <div className="sheet-up fixed inset-0 z-50 bg-cream" role="dialog" aria-label="Report a problem">
+    <div className="sheet-up fixed inset-0 z-50 bg-cream" role="dialog" aria-label="Need a hand?">
       <div className="mx-auto h-full max-w-[480px] overflow-y-auto overscroll-contain">
         <div className="sticky top-0 z-10 flex items-center gap-3 bg-cream px-4 pb-2.5 pt-[max(12px,env(safe-area-inset-top))]">
           <button onClick={onClose} aria-label="Back" className="press grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-ink text-butter"><ArrowLeft size={19} /></button>
-          <p className="font-display text-lg font-extrabold">Report a problem</p>
+          <p className="font-display text-lg font-extrabold">Need a hand?</p>
         </div>
 
         <div className="px-4 pb-[calc(env(safe-area-inset-bottom)+28px)] pt-2">
@@ -251,14 +253,15 @@ export default function ReportSheet({ session, faqCount, onClose }: { session: S
                 <span className="float-a absolute -right-8 -top-8 h-28 w-28 rounded-full bg-butter/25" />
                 <span className="float-c absolute -bottom-8 right-20 h-16 w-16 rounded-full bg-leaf/70" />
                 <p className="relative flex items-center gap-2 text-[13px] font-bold opacity-85"><Sparkles size={15} /> Bin-Buddy can help</p>
-                <h1 className="relative mt-1 font-display text-[28px] font-extrabold leading-none">What went wrong?</h1>
+                <h1 className="relative mt-1 font-display text-[28px] font-extrabold leading-none">What's going on?</h1>
+                <p className="relative mt-2 text-sm leading-snug opacity-90">Tell me what happened and we'll sort it out together.</p>
               </div>
 
               {error && <p className="rise mt-4 rounded-2xl border-2 border-ink bg-blush px-4 py-3 text-sm font-medium">{error}</p>}
 
               <div className="mt-5 space-y-3">
-                {PROBLEMS.map(({ text: t, icon: Icon, tone }, i) => (
-                  <button key={t} onClick={() => start(t)} style={{ animationDelay: `${i * 50}ms` }} className={`press card rise flex w-full items-center gap-3 p-3 text-left ${tone}`}>
+                {PROBLEMS.map(({ text: t, icon: Icon, tone, buddy }, i) => (
+                  <button key={t} onClick={() => (buddy ? onAsk() : start(t))} style={{ animationDelay: `${i * 50}ms` }} className={`press card rise flex w-full items-center gap-3 p-3 text-left ${tone}`}>
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border-2 border-ink bg-white"><Icon size={19} /></span>
                     <span className="min-w-0 font-display text-base font-bold leading-snug">{t}</span>
                   </button>
@@ -288,7 +291,7 @@ export default function ReportSheet({ session, faqCount, onClose }: { session: S
             <div className="rise">
               <div className="card bg-butter p-5">
                 <span className="grid h-12 w-12 place-items-center rounded-2xl border-2 border-ink bg-white"><Wrench size={22} /></span>
-                <p className="mt-3 font-display text-2xl font-extrabold leading-tight">That's an easy fix</p>
+                <p className="mt-3 font-display text-2xl font-extrabold leading-tight">Here's what to try</p>
                 <p className="mt-2 text-[15px] leading-snug">{fix.fix}</p>
               </div>
               <p className="mt-4 text-[15px] leading-snug opacity-80">If it still isn't collected after that, come back here and I'll help you raise a ticket.</p>
@@ -299,16 +302,21 @@ export default function ReportSheet({ session, faqCount, onClose }: { session: S
 
           {phase === "answer" && result?.kind === "answer" && (
             <div className="rise">
-              <div className="ml-auto w-fit max-w-[88%] rounded-2xl border-2 border-ink bg-moss px-4 py-2.5 text-[15px] leading-snug text-white">{text}</div>
-              <div className={`card mt-4 p-4 ${result.answer ? "bg-mint" : "bg-peach"}`}>
-                <p className="flex items-center gap-2 font-display text-lg font-extrabold"><Sprout size={19} /> {result.answer ? "Here's what the rules say" : "I couldn't find this one"}</p>
-                <p className="mt-2 whitespace-pre-line text-[15px] leading-snug [overflow-wrap:anywhere]">
-                  {result.answer ? <Linkified text={result.answer} /> : "It isn't covered in Ajmera Infinity's guidelines or FAQs yet. I've noted it for the committee. For help right now, talk to your block's Sustainability Volunteer."}
-                </p>
-                {result.answer && <p className="mt-2 flex items-center gap-1.5 text-[11px] font-medium opacity-60"><BookOpen size={12} /> From Ajmera Infinity's rules</p>}
+              <div className="ml-auto w-fit max-w-[88%] rounded-2xl rounded-br-md bg-moss px-4 py-2.5 text-[15px] leading-snug text-white [overflow-wrap:anywhere]">{text}</div>
+              <div className="mt-4">
+                {result.card ? <AnswerCard card={result.card} source="From Ajmera Infinity's rules" /> : (
+                  <div className={`card-soft p-4 ${result.answer ? "bg-mint" : result.unavailable ? "bg-butter" : "bg-peach"}`}>
+                    <p className="font-display text-lg font-extrabold leading-tight">{result.answer ? "Here's what the rules say" : result.unavailable ? "I'm a little busy right now" : "I don't have an answer for that yet"}</p>
+                    <p className="mt-1.5 whitespace-pre-line text-[15px] leading-snug [overflow-wrap:anywhere]">
+                      {result.answer ? <Linkified text={result.answer} /> : result.unavailable ? "Please try again in a minute." : "I've noted it so it can be added. For help right now, your block's Sustainability Volunteer is the best person to ask."}
+                    </p>
+                  </div>
+                )}
               </div>
               {result.answer && <p className="mt-4 text-sm leading-snug opacity-75">Still stuck? Your block's Sustainability Volunteer can help.</p>}
-              <button onClick={reset} className="press card mt-5 flex h-13 w-full items-center justify-center gap-2 bg-butter py-3.5 font-display text-base font-extrabold"><RotateCcw size={17} /> Report something else</button>
+              {result.unavailable
+                ? <button onClick={() => start(text)} className="press card mt-5 flex w-full items-center justify-center gap-2 bg-butter py-3.5 font-display text-base font-extrabold"><RotateCcw size={17} /> Try again</button>
+                : <button onClick={reset} className="press card mt-5 flex w-full items-center justify-center gap-2 bg-butter py-3.5 font-display text-base font-extrabold"><RotateCcw size={17} /> Something else</button>}
               <button onClick={onClose} className="mt-1 h-11 w-full text-sm font-bold opacity-70">Done</button>
             </div>
           )}

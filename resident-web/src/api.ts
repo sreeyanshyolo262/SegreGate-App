@@ -16,10 +16,20 @@ export interface Announcement {
   createdAt: string;
 }
 
+export type BinId = "wet" | "dry" | "reject" | "hazardous";
+export type AnswerData =
+  | { type: "bin"; item: string; bin: BinId; say: string; variants: { when: string; bin: BinId }[]; tips: string[] }
+  | { type: "list"; title: string; bin: BinId | null; groups: { label: string; items: string[] }[]; note: string }
+  | { type: "steps"; title: string; steps: string[]; note: string }
+  | { type: "table"; title: string; columns: string[]; rows: string[][]; note: string }
+  | { type: "fact"; title: string; highlight: string; points: string[] };
+
 export interface Answer {
   grounded: boolean;
   ai: boolean;
   answer: string | null;
+  card?: AnswerData | null;
+  unavailable?: boolean;
   source: { name: string; updatedAt: string } | null;
   related: { id: string; question: string }[];
 }
@@ -37,7 +47,7 @@ export interface TroubleCheck { question: string; why: string; fix: string; sour
 interface TroubleBase { counts: { faqs: number; guidelines: number }; consulted: { title: string; type: "FAQ" | "Guideline" }[] }
 export type TroubleResult =
   | (TroubleBase & { kind: "missed"; checks: TroubleCheck[]; category: string })
-  | (TroubleBase & { kind: "answer"; answer: string | null; grounded: boolean });
+  | (TroubleBase & { kind: "answer"; answer: string | null; card?: AnswerData | null; grounded: boolean; unavailable?: boolean });
 
 export interface Session { block: Block; flat: string }
 

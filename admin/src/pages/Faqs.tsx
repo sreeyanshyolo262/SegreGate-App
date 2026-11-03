@@ -12,6 +12,9 @@ const BADGE: Record<FaqTopic, string> = {
   "Why it matters": "bg-emerald-900 text-white",
 };
 
+// Stored as "Rules", shown to residents as "The basics".
+const topicLabel = (t: FaqTopic) => (t === "Rules" ? "The basics" : t);
+
 type Draft = { id?: string; topic: FaqTopic; question: string; answer: string };
 const blank: Draft = { topic: "Rules", question: "", answer: "" };
 
@@ -63,7 +66,7 @@ export default function Faqs() {
           </div>
           <div className="flex flex-wrap gap-1.5">
             {(["All", ...FAQ_TOPICS] as const).map((t) => (
-              <button key={t} onClick={() => setTopic(t)} className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition ${topic === t ? "bg-brand-dark text-white" : "bg-surface text-muted hover:bg-brand-soft"}`}>{t}</button>
+              <button key={t} onClick={() => setTopic(t)} className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition ${topic === t ? "bg-brand-dark text-white" : "bg-surface text-muted hover:bg-brand-soft"}`}>{t === "All" ? t : topicLabel(t)}</button>
             ))}
           </div>
         </div>
@@ -73,7 +76,7 @@ export default function Faqs() {
             <div key={f.id} className="flex items-start gap-4 p-5">
               <div className="min-w-0 flex-1">
                 <div className="mb-1.5 flex flex-wrap items-center gap-2">
-                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${BADGE[f.topic] ?? "bg-slate-100 text-slate-700"}`}>{f.topic}</span>
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${BADGE[f.topic] ?? "bg-slate-100 text-slate-700"}`}>{topicLabel(f.topic)}</span>
                   <span className="text-xs text-muted">Updated {fmtDate(f.updatedAt)}</span>
                 </div>
                 <p className="font-medium">{f.question}</p>
@@ -95,7 +98,7 @@ export default function Faqs() {
           <div className="space-y-4">
             <Field label="Topic" hint="Residents can filter by topic, and each one has its own colour.">
               <select value={draft.topic} onChange={(e) => setDraft({ ...draft, topic: e.target.value as FaqTopic })} className={inputCls}>
-                {FAQ_TOPICS.map((t) => <option key={t}>{t}</option>)}
+                {FAQ_TOPICS.map((t) => <option key={t} value={t}>{topicLabel(t)}</option>)}
               </select>
             </Field>
             <Field label="Question">
