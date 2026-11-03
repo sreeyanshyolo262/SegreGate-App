@@ -105,6 +105,14 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
 
       <BuddyHero onAsk={askFromHome} count={msgs.length} busy={busy} onResume={() => openSheet("buddy")} />
 
+      <aside className="card rise mt-4 bg-mint p-4">
+        <div className="flex items-center gap-3">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border-2 border-ink bg-white text-leaf"><Sprout size={22} /></span>
+          <h2 className="min-w-0 font-display text-xl font-extrabold leading-[1.15]">We're all figuring this out together</h2>
+        </div>
+        <p className="mt-3 text-[15px] leading-snug">Segregation takes a little getting used to, and this app is here to make it easier. <span className="font-bold">It's mandatory for every household</span>, and getting it right helps protect the people who handle our waste.</p>
+      </aside>
+
       <section className={`rise mt-4 grid gap-3 ${showFaqTile ? "grid-cols-2" : "grid-cols-1"}`}>
         <button onClick={() => openSheet("guide")} className="card press relative flex flex-col items-start justify-start overflow-hidden bg-mint p-3.5 text-left">
           <span className="absolute -right-5 -top-5 h-16 w-16 rounded-full bg-leaf/15" />
@@ -134,13 +142,6 @@ export default function Dashboard({ session, onSignOut }: { session: Session; on
       </button>
       <InstallStrip onNeedHelp={() => openSheet("install")} />
 
-      <aside className="rise mt-7 flex gap-3 rounded-[22px] bg-mint/50 p-4">
-        <Sprout size={20} className="mt-0.5 shrink-0 text-leaf" />
-        <div className="min-w-0">
-          <p className="font-display text-[17px] font-extrabold leading-tight">We're all figuring this out together</p>
-          <p className="mt-1 text-sm leading-snug opacity-80">Segregation takes a little getting used to, and this app is here to make it easier. It's mandatory for every household, and getting it right helps protect the people who handle our waste.</p>
-        </div>
-      </aside>
 
       <section className="mt-8">
         <h2 className="mb-3 font-display text-lg font-extrabold">Community updates</h2>
