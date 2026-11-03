@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { EllipsisVertical, Share, SquarePlus, Smartphone, X } from "lucide-react";
+import Sheet from "./Sheet";
 
 interface InstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -22,6 +23,7 @@ const wasDismissed = () => { try { return localStorage.getItem(KEY) === "1"; } c
 
 export function InstallStrip({ onNeedHelp }: { onNeedHelp: () => void }) {
   const [hidden, setHidden] = useState(() => isStandalone() || wasDismissed());
+  const [closing, setClosing] = useState(false);
   const [, rerender] = useState(0);
 
   useEffect(() => {
@@ -44,16 +46,19 @@ export function InstallStrip({ onNeedHelp }: { onNeedHelp: () => void }) {
   }
   function dismiss() {
     try { localStorage.setItem(KEY, "1"); } catch { /* storage unavailable */ }
-    setHidden(true);
+    setClosing(true);
+    setTimeout(() => setHidden(true), 420);
   }
 
   return (
-    <div className="rise mt-3 flex items-center rounded-[18px] border-2 border-dashed border-ink/35">
+    <div className={`fold ${closing ? "" : "open"}`}><div>
+    <div className="fold-body mt-3 flex items-center rounded-[18px] border-2 border-dashed border-ink/35">
       <button onClick={install} className="flex min-w-0 flex-1 items-center gap-2.5 py-2.5 pl-3.5 text-left text-sm font-bold active:scale-[.98]">
         <Smartphone size={18} className="shrink-0" /> Add to home screen
       </button>
       <button onClick={dismiss} aria-label="Hide this" className="grid h-10 w-10 shrink-0 place-items-center text-ink/55"><X size={16} /></button>
     </div>
+    </div></div>
   );
 }
 
@@ -69,8 +74,8 @@ function Step({ n, children }: { n: number; children: React.ReactNode }) {
 // iPhones have no install prompt, and some Android browsers don't offer one, so these show the manual steps.
 export function InstallHelp({ onClose }: { onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/50" role="dialog" aria-label="Add to home screen" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="sheet-up w-full max-w-[480px] rounded-t-[28px] border-2 border-b-0 border-ink bg-cream p-5 pb-[calc(env(safe-area-inset-bottom)+20px)]">
+    <Sheet label="Add to home screen" onClose={onClose} small>
+      <div data-sheet-handle className="p-5 pb-[calc(env(safe-area-inset-bottom)+20px)]">
         <div className="flex items-start justify-between gap-3">
           <p className="font-display text-xl font-extrabold leading-tight">Add to your home screen</p>
           <button onClick={onClose} aria-label="Close" className="grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink bg-white"><X size={16} /></button>
@@ -93,6 +98,6 @@ export function InstallHelp({ onClose }: { onClose: () => void }) {
         </ol>
         <p className="mt-4 text-[13px] leading-snug opacity-70">Opened this from WhatsApp? Open it in {isIos() ? "Safari" : "Chrome"} first, as these options may not show inside WhatsApp.</p>
       </div>
-    </div>
+    </Sheet>
   );
 }

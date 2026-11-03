@@ -19,6 +19,16 @@ export function Card({ tone = "white", soft = false, className = "", children, o
   );
 }
 
+// A soft glow travels around the edge while the AI is working.
+export function AiRing({ on, className = "", children }: { on: boolean; className?: string; children: ReactNode }) {
+  return (
+    <div className={`ai-ring ${className}`} data-on={on ? "" : undefined}>
+      <span className="ai-ring-glow" aria-hidden="true" />
+      {children}
+    </div>
+  );
+}
+
 export function Header({ title, sub, right }: { title: string; sub?: string; right?: ReactNode }) {
   return (
     <div className="flex items-start justify-between px-5 pt-6 pb-3">

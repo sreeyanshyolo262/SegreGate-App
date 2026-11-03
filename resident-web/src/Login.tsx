@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { api, BLOCKS, type Block, type Session } from "./api";
 import { Card } from "./ui";
-import { Mascot } from "./Buddy";
+import { Mascot } from "./Mascot";
+import { BinOrbit } from "./Bins";
+import { prefersReducedMotion } from "./motion";
 
 const BLOCKS_HELP = "Blocks are A to T (there's no O), or V for Villows.";
 
@@ -26,13 +28,20 @@ export default function Login({ onDone }: { onDone: (s: Session) => void }) {
   const [value, setValue] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
 
   const read = readFlat(value);
   const found = "block" in read ? read : null;
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!found) return setErr("problem" in read ? read.problem : "");
+    if (!found) {
+      setErr("problem" in read ? read.problem : "");
+      // A small nudge, the way iOS says "not quite".
+      if (!prefersReducedMotion()) input.current?.animate(["none", "translateX(-7px)", "translateX(6px)", "translateX(-4px)", "translateX(2px)", "none"].map((transform) => ({ transform })), { duration: 420, easing: "ease-out" });
+      return;
+    }
     setBusy(true); setErr("");
     try {
       await api.login(found);
@@ -44,29 +53,27 @@ export default function Login({ onDone }: { onDone: (s: Session) => void }) {
   }
 
   return (
-    <form onSubmit={submit} className="rise px-5 pb-8 pt-5">
-      <Card tone="moss" className="relative overflow-hidden p-5">
+    <form onSubmit={submit} className="cascade px-5 pb-8 pt-5">
+      <Card tone="moss" className="hero-card relative overflow-hidden p-5">
         <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-butter/25" />
         <div className="absolute -bottom-8 right-10 h-20 w-20 rounded-full bg-leaf/60" />
-        <div className="relative flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <p className="text-sm font-medium opacity-80">Ajmera Infinity</p>
-            <h1 className="mt-0.5 font-display text-[27px] font-extrabold leading-[1.08]">A little help with your waste</h1>
-          </div>
-          <div className="shrink-0"><Mascot size={58} /></div>
+        <BinOrbit size={50} fast={!!found}><Mascot size={92} poke className="hero-mascot" mood={found ? "happy" : focused ? "listening" : "idle"} bump={value.length} /></BinOrbit>
+        <div className="relative mt-1">
+          <p className="text-sm font-medium opacity-80">Ajmera Infinity</p>
+          <h1 className="mt-0.5 font-display text-[27px] font-extrabold leading-[1.08]">A little help with your waste</h1>
         </div>
         <p className="relative mt-3 text-sm leading-snug opacity-90">We're all learning to get segregation right. This will help you work out where everyday items belong, without the guesswork.</p>
       </Card>
 
       <label htmlFor="flat" className="mt-7 block font-display text-xl font-extrabold">What's your flat?</label>
-      <input id="flat" value={value} onChange={(e) => { setValue(e.target.value); setErr(""); }} maxLength={30}
+      <input ref={input} id="flat" onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} value={value} onChange={(e) => { setValue(e.target.value); setErr(""); }} maxLength={30}
         autoCapitalize="characters" autoCorrect="off" autoComplete="off" spellCheck={false} enterKeyHint="go" placeholder="e.g. M-1601"
         className="mt-3 h-14 w-full rounded-2xl border-2 border-ink/25 bg-white px-4 font-display text-xl font-bold outline-none transition placeholder:font-sans placeholder:text-lg placeholder:font-normal placeholder:text-ink/40 focus:border-ink" />
 
       <div className="mt-2 flex min-h-6 items-center text-sm" aria-live="polite">
         {found
-          ? <p className="rise flex items-center gap-1.5 font-bold text-leaf"><Check size={16} strokeWidth={3} />{found.block === "Villows" ? "Villows" : `Block ${found.block}`} · Flat {found.flat}</p>
-          : <p className="opacity-60">Your block, then your flat. Villows? Try V-12.</p>}
+          ? <p key={`${found.block}-${found.flat}`} className="pop-soft flex items-center gap-1.5 font-bold text-leaf" style={{ transformOrigin: "0 50%" }}><Check size={16} strokeWidth={3} />{found.block === "Villows" ? "Villows" : `Block ${found.block}`} · Flat {found.flat}</p>
+          : <p className="hint opacity-60">Your block, then your flat. Villows? Try V-12.</p>}
       </div>
 
       {err && <p className="rise mt-2 rounded-xl bg-peach px-4 py-2.5 text-sm font-medium">{err}</p>}

@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, BookOpen, Check, CheckCheck, ClipboardCopy, ExternalLink, FileText, MapPin, RotateCcw, Search, Send, Sparkles, Trash2, Wrench, X, type LucideIcon } from "lucide-react";
 import { api, type Session, type TroubleCheck, type TroubleResult } from "./api";
 import Linkified from "./Linkified";
 import AnswerCard from "./AnswerCard";
-import { Mascot } from "./Buddy";
+import { Mascot } from "./Mascot";
+import Sheet from "./Sheet";
+import { AiRing } from "./ui";
+import { haptic } from "./motion";
 
 const PLAY = "https://play.google.com/store/apps/details?id=com.mygate.user";
 const APP_STORE = "https://apps.apple.com/in/app/mygate-premium/id1101762651";
@@ -54,17 +57,19 @@ function Thinking({ result, faqCount, onDone }: { result: TroubleResult | null; 
 
   return (
     <div className="rise">
-      <div className="card relative overflow-hidden bg-moss p-5 text-white">
-        <span className="float-a absolute -right-6 -top-6 h-24 w-24 rounded-full bg-butter/25" />
-        <span className="float-c absolute -bottom-8 left-1/2 h-16 w-16 rounded-full bg-leaf/70" />
-        <div className="relative flex items-center gap-3">
-          <span className="shrink-0"><Mascot size={46} thinking /></span>
-          <div>
-            <p className="font-display text-xl font-extrabold leading-tight">Bin-Buddy is on it</p>
-            <p className="text-[13px] opacity-80" aria-live="polite">{ready ? "Found what applies to you" : "Going through your society's rules"}</p>
+      <AiRing on={!ready} className="rounded-[22px] shadow-[0_3px_0_#12332a]">
+        <div className="relative overflow-hidden rounded-[20px] bg-moss p-5 text-white">
+          <span className="float-a absolute -right-6 -top-6 h-24 w-24 rounded-full bg-butter/25" />
+          <span className="float-c absolute -bottom-8 left-1/2 h-16 w-16 rounded-full bg-leaf/70" />
+          <div className="relative flex items-center gap-3">
+            <span className="shrink-0"><Mascot size={46} mood={ready ? "happy" : "thinking"} /></span>
+            <div>
+              <p className="font-display text-xl font-extrabold leading-tight">Bin-Buddy is on it</p>
+              <p className="text-[13px] opacity-80" aria-live="polite">{ready ? "Found what applies to you" : "Going through your society's rules"}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </AiRing>
 
       <ol className="mt-5 space-y-3" aria-live="polite">
         {steps.map((label, i) => {
@@ -74,7 +79,7 @@ function Thinking({ result, faqCount, onDone }: { result: TroubleResult | null; 
           return (
             <li key={i} className="rise flex items-center gap-3 text-[15px] font-medium">
               <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 border-ink transition-colors ${done ? "bg-mint" : "bg-white"}`}>
-                {done ? <Check size={15} strokeWidth={3} /> : <span className={active ? "dots dots-sm" : ""}><span /></span>}
+                {done ? <Check size={15} strokeWidth={3} className="pop-in" /> : <span className={active ? "dots dots-sm" : ""}><span /></span>}
               </span>
               {label}
             </li>
@@ -104,6 +109,7 @@ function Checks({ checks, onAllGood, onFix }: { checks: TroubleCheck[]; onAllGoo
   const [saidNo, setSaidNo] = useState(false);
   const check = checks[index];
   const next = () => {
+    haptic(6);
     setSaidNo(false);
     if (index + 1 >= checks.length) onAllGood(); else setIndex(index + 1);
   };
@@ -114,18 +120,22 @@ function Checks({ checks, onAllGood, onFix }: { checks: TroubleCheck[]; onAllGoo
       <p className="mt-1 text-sm leading-snug opacity-70">These are the usual reasons a bin gets missed. Let's see if one of them applies.</p>
 
       <div className="mt-4 flex gap-1.5" role="progressbar" aria-valuemin={0} aria-valuemax={checks.length} aria-valuenow={index + 1} aria-label={`Check ${index + 1} of ${checks.length}`}>
-        {checks.map((_, i) => <span key={i} className={`h-2.5 flex-1 rounded-full border-2 border-ink transition-colors duration-300 ${i < index ? "bg-leaf" : i === index ? "bg-butter" : "bg-white"}`} />)}
+        {checks.map((_, i) => (
+          <span key={i} className="relative h-2.5 flex-1 overflow-hidden rounded-full border-2 border-ink bg-white">
+            <span className={`absolute inset-0 origin-left transition-[transform,background-color] duration-500 ${i < index ? "scale-x-100 bg-leaf" : i === index ? "scale-x-100 bg-butter" : "scale-x-0 bg-butter"}`} />
+          </span>
+        ))}
       </div>
 
       {index > 0 && (
         <ul className="mt-4 space-y-1.5">
           {checks.slice(0, index).map((c) => (
-            <li key={c.question} className="flex items-start gap-2 text-[13px] opacity-65"><Check size={14} strokeWidth={3} className="mt-0.5 shrink-0 text-leaf" /><span className="min-w-0">{c.question}</span></li>
+            <li key={c.question} className="rise flex items-start gap-2 text-[13px] opacity-65"><Check size={14} strokeWidth={3} className="mt-0.5 shrink-0 text-leaf" /><span className="min-w-0">{c.question}</span></li>
           ))}
         </ul>
       )}
 
-      <div key={index} className={`card rise mt-4 p-4 ${TONES[index % TONES.length]}`}>
+      <div key={index} className={`card slide-in mt-4 p-4 ${TONES[index % TONES.length]}`}>
         <p className="text-[11px] font-bold uppercase tracking-wider opacity-55">Check {index + 1} of {checks.length}</p>
         <p className="mt-1 font-display text-[21px] font-extrabold leading-tight">{check.question}</p>
         {check.why && <p className="mt-2 text-sm leading-snug opacity-80">{check.why}</p>}
@@ -191,7 +201,7 @@ function Ticket({ category, session, onDone }: { category: string; session: Sess
 
       <div className="mt-5 rounded-[20px] border-2 border-ink bg-white p-3.5">
         <p className="text-[11px] font-bold uppercase tracking-wider opacity-55">Ticket details</p>
-        <p className="mt-1 select-text text-sm leading-snug">{details}</p>
+        <p data-nodrag className="mt-1 select-text text-sm leading-snug">{details}</p>
         <button onClick={copy} className="mt-3 flex h-10 items-center gap-2 rounded-full border-2 border-ink bg-butter px-4 text-sm font-bold active:scale-95">
           {copied === "yes" ? <><CheckCheck size={16} /> Copied</> : <><ClipboardCopy size={16} /> Copy details</>}
         </button>
@@ -216,13 +226,10 @@ export default function ReportSheet({ session, faqCount, onClose, onAsk }: { ses
   const [fix, setFix] = useState<TroubleCheck | null>(null);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prev; };
-  }, [onClose]);
+  const scroller = useRef<HTMLDivElement>(null);
+
+  // Each new step starts from the top.
+  useEffect(() => { scroller.current?.scrollTo({ top: 0 }); }, [phase]);
 
   async function start(problem: string) {
     problem = problem.trim();
@@ -239,16 +246,16 @@ export default function ReportSheet({ session, faqCount, onClose, onAsk }: { ses
   const finishThinking = () => setPhase((p) => (p !== "thinking" ? p : result?.kind === "missed" ? "checks" : "answer"));
 
   return (
-    <div className="sheet-up fixed inset-0 z-50 bg-cream" role="dialog" aria-label="Need a hand?">
-      <div className="mx-auto h-full max-w-[480px] overflow-y-auto overscroll-contain">
-        <div className="sticky top-0 z-10 flex items-center gap-3 bg-cream px-4 pb-2.5 pt-[max(12px,env(safe-area-inset-top))]">
+    <Sheet label="Need a hand?" onClose={onClose}>
+      <div ref={scroller} data-sheet-scroll className="h-full overflow-y-auto overscroll-contain">
+        <div data-sheet-handle className="material sticky top-0 z-10 flex items-center gap-3 px-4 pb-2.5 pt-[18px]">
           <button onClick={onClose} aria-label="Back" className="press grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-ink text-butter"><ArrowLeft size={19} /></button>
           <p className="font-display text-lg font-extrabold">Need a hand?</p>
         </div>
 
         <div className="px-4 pb-[calc(env(safe-area-inset-bottom)+28px)] pt-2">
           {phase === "ask" && (
-            <div className="rise">
+            <div className="cascade">
               <div className="card relative overflow-hidden bg-moss p-5 text-white">
                 <span className="float-a absolute -right-8 -top-8 h-28 w-28 rounded-full bg-butter/25" />
                 <span className="float-c absolute -bottom-8 right-20 h-16 w-16 rounded-full bg-leaf/70" />
@@ -261,7 +268,7 @@ export default function ReportSheet({ session, faqCount, onClose, onAsk }: { ses
 
               <div className="mt-5 space-y-3">
                 {PROBLEMS.map(({ text: t, icon: Icon, tone, buddy }, i) => (
-                  <button key={t} onClick={() => (buddy ? onAsk() : start(t))} style={{ animationDelay: `${i * 50}ms` }} className={`press card rise flex w-full items-center gap-3 p-3 text-left ${tone}`}>
+                  <button key={t} onClick={() => (buddy ? onAsk() : start(t))} style={{ animationDelay: `${60 + i * 55}ms` }} className={`press card rise flex w-full items-center gap-3 p-3 text-left ${tone}`}>
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border-2 border-ink bg-white"><Icon size={19} /></span>
                     <span className="min-w-0 font-display text-base font-bold leading-snug">{t}</span>
                   </button>
@@ -288,7 +295,7 @@ export default function ReportSheet({ session, faqCount, onClose, onAsk }: { ses
           {phase === "ticket" && result?.kind === "missed" && <Ticket category={result.category} session={session} onDone={onClose} />}
 
           {phase === "fix" && fix && (
-            <div className="rise">
+            <div className="slide-in">
               <div className="card bg-butter p-5">
                 <span className="grid h-12 w-12 place-items-center rounded-2xl border-2 border-ink bg-white"><Wrench size={22} /></span>
                 <p className="mt-3 font-display text-2xl font-extrabold leading-tight">Here's what to try</p>
@@ -301,11 +308,11 @@ export default function ReportSheet({ session, faqCount, onClose, onAsk }: { ses
           )}
 
           {phase === "answer" && result?.kind === "answer" && (
-            <div className="rise">
-              <div className="ml-auto w-fit max-w-[88%] rounded-2xl rounded-br-md bg-moss px-4 py-2.5 text-[15px] leading-snug text-white [overflow-wrap:anywhere]">{text}</div>
+            <div>
+              <div className="bubble-in ml-auto w-fit max-w-[88%] rounded-2xl rounded-br-md bg-moss px-4 py-2.5 text-[15px] leading-snug text-white [overflow-wrap:anywhere]">{text}</div>
               <div className="mt-4">
-                {result.card ? <AnswerCard card={result.card} source="From Ajmera Infinity's rules" /> : (
-                  <div className={`card-soft p-4 ${result.answer ? "bg-mint" : result.unavailable ? "bg-butter" : "bg-peach"}`}>
+                {result.card ? <AnswerCard card={result.card} source={result.source} /> : (
+                  <div className={`card-soft card-in p-4 ${result.answer ? "bg-mint" : result.unavailable ? "bg-butter" : "bg-peach"}`}>
                     <p className="font-display text-lg font-extrabold leading-tight">{result.answer ? "Here's what the rules say" : result.unavailable ? "I'm a little busy right now" : "I don't have an answer for that yet"}</p>
                     <p className="mt-1.5 whitespace-pre-line text-[15px] leading-snug [overflow-wrap:anywhere]">
                       {result.answer ? <Linkified text={result.answer} /> : result.unavailable ? "Please try again in a minute." : "I've noted it so it can be added. For help right now, your block's Sustainability Volunteer is the best person to ask."}
@@ -322,6 +329,6 @@ export default function ReportSheet({ session, faqCount, onClose, onAsk }: { ses
           )}
         </div>
       </div>
-    </div>
+    </Sheet>
   );
 }

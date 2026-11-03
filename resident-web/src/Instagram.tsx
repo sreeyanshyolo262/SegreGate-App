@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const HANDLE = "ajmera_infinity_ecotroop";
 export const INSTAGRAM_URL = `https://www.instagram.com/${HANDLE}`;
@@ -25,6 +25,15 @@ export function InstagramButton() {
 // Instagram's profile embed: the latest posts and reels, updated automatically whenever the page posts.
 export default function InstagramSection() {
   const [loaded, setLoaded] = useState(false);
+  const [near, setNear] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!box.current) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setNear(true); io.disconnect(); } }, { rootMargin: "400px" });
+    io.observe(box.current);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section className="mt-9">
@@ -37,9 +46,9 @@ export default function InstagramSection() {
       </div>
 
       <div className="card overflow-hidden bg-white [container-type:inline-size]">
-        <div className={`relative h-[380px] h-[calc(148px+66.67cqw)] ${loaded ? "" : "skeleton"}`}>
-          <iframe src={`${INSTAGRAM_URL}/embed/`} title="Latest posts and reels from EcoTroop on Instagram" loading="lazy" scrolling="no"
-            onLoad={() => setLoaded(true)} className={`h-full w-full border-0 transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`} />
+        <div ref={box} className={`relative h-[380px] h-[calc(148px+66.67cqw)] ${near && !loaded ? "skeleton" : ""}`}>
+          {near && <iframe src={`${INSTAGRAM_URL}/embed/`} title="Latest posts and reels from EcoTroop on Instagram" scrolling="no"
+            onLoad={() => setLoaded(true)} className={`h-full w-full border-0 transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`} />}
         </div>
       </div>
 
